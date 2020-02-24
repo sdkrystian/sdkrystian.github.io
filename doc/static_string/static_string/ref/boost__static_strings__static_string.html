@@ -27,7 +27,7 @@
 <a name="static_string.ref.boost__static_strings__static_string"></a><a class="link" href="boost__static_strings__static_string.html" title="static_string">static_string</a>
 </h3></div></div></div>
 <p>
-        <a class="indexterm" name="idm1543415648"></a>
+        <a class="indexterm" name="idm1543426416"></a>
       </p>
 <h5>
 <a name="static_string.ref.boost__static_strings__static_string.h0"></a>
@@ -936,6 +936,13 @@
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">N</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">static_u32string</span> <span class="special">=</span>
   <span class="identifier">basic_static_string</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">char_traits</span><span class="special">&lt;</span><span class="keyword">char32_t</span><span class="special">&gt;&gt;;</span>
+</pre>
+<p>
+        Addtionally, the alias <code class="computeroutput"><span class="identifier">static_u8string</span></code>
+        is provided in C++20
+      </p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">static_u8string</span> <span class="special">=</span>
+  <span class="identifier">basic_static_string</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">,</span> <span class="identifier">char8_t</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">char_traits</span><span class="special">&lt;</span><span class="identifier">char8_t</span><span class="special">&gt;&gt;;</span>
 </pre>
 <h5>
 <a name="static_string.ref.boost__static_strings__static_string.h4"></a>
