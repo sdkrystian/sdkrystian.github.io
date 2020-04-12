@@ -1,0 +1,436 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Storage</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../usage.html" title="Usage">
+<link rel="prev" href="numbers.html" title="Using Numbers">
+<link rel="next" href="parsing.html" title="Parsing">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="numbers.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../usage.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="parsing.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.usage.storage"></a><a class="link" href="storage.html" title="Storage">Storage</a>
+</h3></div></div></div>
+<p>
+        Instances of <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>,
+        <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>,
+        <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>,
+        and <a class="link" href="../ref/boost__json__string.html" title="string"><code class="computeroutput"><span class="identifier">string</span></code></a>
+        all use dynamically allocated memory. The library provides a mechanism similar
+        to the C++ standard's polymorphic allocator to allow callers to control the
+        strategy used to allocate and deallocate memory, with these additional features:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            The lifetime of the storage can be reference-counted or scoped.
+          </li>
+<li class="listitem">
+            Calculation of storage equality is fast, without requiring RTTI.
+          </li>
+<li class="listitem">
+            An implementation can indicate to the library that deallocation is not
+            necessary, improving the performance of destructors.
+          </li>
+</ul></div>
+<p>
+        These types and functions are available:
+      </p>
+<div class="table">
+<a name="json.usage.storage.storage_functions_and_types"></a><p class="title"><b>Table&#160;2.&#160;Storage Functions and Types</b></p>
+<div class="table-contents"><table class="table" summary="Storage Functions and Types">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__is_storage.html" title="is_storage"><code class="computeroutput"><span class="identifier">is_storage</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Metafunction to determine if a type meets the requirements of
+                  <span class="emphasis"><em>Storage</em></span>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__make_storage.html" title="make_storage"><code class="computeroutput"><span class="identifier">make_storage</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Function to create a new storage of the specified type and return
+                  it in a smart pointer container.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__pool.html" title="pool"><code class="computeroutput"><span class="identifier">pool</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  An implementation of <span class="emphasis"><em>Storage</em></span> using zero or
+                  more large, fixed-size blocks from which allocations are made.
+                  Allocated memory is not freed until ownership of the storage is
+                  released, which makes it fast for parsing but less well-suited
+                  for mutation.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__scoped_storage.html" title="scoped_storage"><code class="computeroutput"><span class="identifier">scoped_storage</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  This wrapper creates a new, uncounted storage of the specified
+                  type whose lifetime is the same as the lifetime of the wrapper.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__storage.html" title="storage"><code class="computeroutput"><span class="identifier">storage</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  The abstract base class representing the storage object.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__storage_ptr.html" title="storage_ptr"><code class="computeroutput"><span class="identifier">storage_ptr</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  A smart pointer container through which an instance of a storage
+                  object is accessed.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+        The library provides a <span class="emphasis"><em>default storage</em></span> object which
+        wraps calls to the <code class="computeroutput"><span class="keyword">new</span></code> and
+        <code class="computeroutput"><span class="keyword">delete</span></code> global operators. This
+        storage is not reference counted, and requires calls to deallocate. A default
+        constructed <a class="link" href="../ref/boost__json__storage_ptr.html" title="storage_ptr"><code class="computeroutput"><span class="identifier">storage_ptr</span></code></a> always points to the
+        default storage. When instances of library types are constructed without
+        specifying a storage pointer, they use the default storage:
+      </p>
+<pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span><span class="special">;</span>                                   <span class="comment">// uses the default storage</span>
+<span class="identifier">storage_ptr</span> <span class="identifier">sp</span><span class="special">;</span>                             <span class="comment">// uses the default storage</span>
+<span class="identifier">object</span> <span class="identifier">obj</span><span class="special">(</span> <span class="identifier">sp</span> <span class="special">);</span>                           <span class="comment">// uses the default storage</span>
+
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">storage</span><span class="special">().</span><span class="identifier">get</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">sp</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">);</span>   <span class="comment">// same pointer</span>
+<span class="identifier">assert</span><span class="special">(</span> <span class="special">*</span><span class="identifier">jv</span><span class="special">.</span><span class="identifier">storage</span><span class="special">()</span> <span class="special">==</span> <span class="special">*</span><span class="identifier">sp</span> <span class="special">);</span>             <span class="comment">// deep equality</span>
+
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">storage</span><span class="special">().</span><span class="identifier">get</span><span class="special">()</span> <span class="special">==</span>
+            <span class="identifier">obj</span><span class="special">.</span><span class="identifier">storage</span><span class="special">().</span><span class="identifier">get</span><span class="special">()</span> <span class="special">);</span>          <span class="comment">// same pointer</span>
+</pre>
+<p>
+        The default storage is suited for general purpose operations. It allocates
+        only what is needed, and frees memory immediately when destructors run. When
+        making changes to a <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a> containing a JSON document,
+        it is a good choice.
+      </p>
+<h5>
+<a name="json.usage.storage.h0"></a>
+        <span class="phrase"><a name="json.usage.storage.pool_storage"></a></span><a class="link" href="storage.html#json.usage.storage.pool_storage">Pool
+        Storage</a>
+      </h5>
+<p>
+        The library provides another implementation called <a class="link" href="../ref/boost__json__pool.html" title="pool"><code class="computeroutput"><span class="identifier">pool</span></code></a>, optimized for parsing without
+        subsequent modification. This implementation allocates large equal-sized
+        blocks and divides them up as needed to satisfy allocation requests, and
+        only deallocates when the lifetime of the storage ends. This example shows
+        how a function accepting a string can parse the string into a value using
+        a pool and return the result:
+      </p>
+<pre class="programlisting"><span class="identifier">value</span> <span class="identifier">parse_fast</span><span class="special">(</span> <span class="identifier">string_view</span> <span class="identifier">s</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">return</span> <span class="identifier">parse</span><span class="special">(</span> <span class="identifier">s</span><span class="special">,</span> <span class="identifier">make_storage</span><span class="special">&lt;</span><span class="identifier">pool</span><span class="special">&gt;()</span> <span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        In the sample code above, ownership of the pool is shared by the returned
+        value and all of its children. The pool is destroyed only when the last value
+        referencing it goes away. This is accomplished by using an atomic reference
+        count, incrementing and decrementing as appropriate, and destroying the storage
+        object when the count is decremented to zero.
+      </p>
+<p>
+        Pools are faster for parsing and insertion, but consume more memory than
+        default storage especially if elements are added and removed over time, since
+        allocations are not freed until the storage is destroyed.
+      </p>
+<h5>
+<a name="json.usage.storage.h1"></a>
+        <span class="phrase"><a name="json.usage.storage.scoped_storage"></a></span><a class="link" href="storage.html#json.usage.storage.scoped_storage">Scoped
+        Storage</a>
+      </h5>
+<p>
+        As atomic operations are relatively expensive compared to their non-atomic
+        counterparts, sometimes it is desirable to avoid these operations when the
+        lifetime of the JSON object can be bounded. For example, consider a network
+        server which receives a JSON representing an RPC command. It parses the JSON,
+        dispatches the command, and then destroys the value. In this use-case, the
+        lifetime of the value is bounded by the function in which it appears. To
+        make this case more efficient, we can construct the block storage using the
+        <a class="link" href="../ref/boost__json__scoped_storage.html" title="scoped_storage"><code class="computeroutput"><span class="identifier">scoped_storage</span></code></a>
+        wrapper and use that for the storage instead:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">do_rpc</span><span class="special">(</span> <span class="identifier">string_view</span> <span class="identifier">cmd</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">scoped_storage</span><span class="special">&lt;</span><span class="identifier">pool</span><span class="special">&gt;</span> <span class="identifier">sp</span><span class="special">;</span>
+
+    <span class="identifier">value</span> <span class="keyword">const</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">parse</span><span class="special">(</span> <span class="identifier">cmd</span><span class="special">,</span> <span class="identifier">sp</span> <span class="special">);</span>
+
+    <span class="identifier">do_json</span><span class="special">(</span> <span class="identifier">jv</span> <span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Scoped storage removes the cost of reference counting from operations on
+        the containers that use it.
+      </p>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Care must be taken to ensure that any instances of <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>, <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>, <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>, or <a class="link" href="../ref/boost__json__string.html" title="string"><code class="computeroutput"><span class="identifier">string</span></code></a> that use <a class="link" href="../ref/boost__json__scoped_storage.html" title="scoped_storage"><code class="computeroutput"><span class="identifier">scoped_storage</span></code></a> are not accessed
+          after the storage is destroyed, otherwise the behavior is undefined.
+        </p></td></tr>
+</table></div>
+<h5>
+<a name="json.usage.storage.h2"></a>
+        <span class="phrase"><a name="json.usage.storage.custom_storage"></a></span><a class="link" href="storage.html#json.usage.storage.custom_storage">Custom
+        Storage</a>
+      </h5>
+<p>
+        Users who need precise control over the allocation can implement their own
+        type which meets the <span class="emphasis"><em>Storage</em></span> named requirements. These
+        types will work with both <a class="link" href="../ref/boost__json__make_storage.html" title="make_storage"><code class="computeroutput"><span class="identifier">make_storage</span></code></a> and <a class="link" href="../ref/boost__json__scoped_storage.html" title="scoped_storage"><code class="computeroutput"><span class="identifier">scoped_storage</span></code></a>. The requirements
+        are as follows:
+      </p>
+<h5>
+<a name="json.usage.storage.h3"></a>
+        <span class="phrase"><a name="json.usage.storage.requirements"></a></span><a class="link" href="storage.html#json.usage.storage.requirements">Requirements</a>
+      </h5>
+<p>
+        In this table:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">S</span></code> denotes a type meeting
+            the requirements of <span class="emphasis"><em>Storage</em></span>.
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">n</span></code> and <code class="computeroutput"><span class="identifier">a</span></code>
+            are values of type <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">p</span></code> is a value of type
+            <code class="computeroutput"><span class="keyword">void</span><span class="special">*</span></code>.
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">t</span></code> is a value of type
+            <code class="computeroutput"><span class="identifier">S</span></code>.
+          </li>
+</ul></div>
+<div class="table">
+<a name="json.usage.storage.valid_expressions"></a><p class="title"><b>Table&#160;3.&#160;Valid expressions</b></p>
+<div class="table-contents"><table class="table" summary="Valid expressions">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Type
+                </p>
+              </th>
+<th>
+                <p>
+                  Semantics, Pre/Post-conditions
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">S</span><span class="special">::</span><span class="identifier">id</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  An unsigned integer representing a possibly unique "type id."
+                  This value is used to determine if other instances of this type
+                  should compare equal. When zero, other instances never compare
+                  equal. If set, two instances of <code class="computeroutput"><span class="identifier">storage</span></code>
+                  compare equal if their id is the same.
+                </p>
+                <p>
+                  To select an appropriate value for <code class="computeroutput"><span class="identifier">id</span></code>
+                  which is non-zero, use a truly random number such as one generate
+                  from <a href="https://www.random.org/cgi-bin/randbyte?nbytes=8&amp;format=h" target="_top">this
+                  generator</a>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">S</span><span class="special">::</span><span class="identifier">need_free</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">bool</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  A boolean value indicating whether or not the library needs to
+                  call <code class="computeroutput"><span class="identifier">deallocate</span></code>
+                  for every memory buffer obtained using a corresponding call to
+                  <code class="computeroutput"><span class="identifier">allocate</span></code>. This
+                  is <code class="computeroutput"><span class="keyword">true</span></code> for the default
+                  storage, which uses global operator <code class="computeroutput"><span class="keyword">new</span></code>
+                  and <code class="computeroutput"><span class="keyword">delete</span></code>. But it
+                  is <code class="computeroutput"><span class="keyword">false</span></code> for <a class="link" href="../ref/boost__json__pool.html" title="pool"><code class="computeroutput"><span class="identifier">pool</span></code></a>,
+                  since it frees all the memory when it goes out of scope.
+                </p>
+                <p>
+                  Skipping calls to <code class="computeroutput"><span class="identifier">deallocate</span></code>
+                  can have significant performance benefits, as destructors for library
+                  types may also be skipped if the storage is not reference-counted.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">t</span><span class="special">.</span><span class="identifier">allocate</span><span class="special">(</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span><span class="special">*</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Allocate dynamic storage of at least <code class="computeroutput"><span class="identifier">n</span></code>
+                  bytes. The returned storage is aligned to the specified alignment
+                  <code class="computeroutput"><span class="identifier">a</span></code> if such alignment
+                  is supported, and to <code class="computeroutput"><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">max_align_t</span><span class="special">)</span></code> otherwise. If the requested storage
+                  cannot be allocated, throws an exception instead.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">t</span><span class="special">.</span><span class="identifier">deallocate</span><span class="special">(</span><span class="identifier">p</span><span class="special">,</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+<td>
+                <p>
+                  Deallocate the memory buffer pointed to by <code class="computeroutput"><span class="identifier">p</span></code>,
+                  which was returned by a prior call to <code class="computeroutput"><span class="identifier">t</span><span class="special">.</span><span class="identifier">allocate</span><span class="special">(</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">a</span><span class="special">)</span></code>. This function shall not throw
+                  exceptions.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><h5>
+<a name="json.usage.storage.h4"></a>
+        <span class="phrase"><a name="json.usage.storage.exemplar"></a></span><a class="link" href="storage.html#json.usage.storage.exemplar">Exemplar</a>
+      </h5>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Storage</span>
+<span class="special">{</span>
+    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">id</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">need_free</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
+
+    <span class="keyword">void</span><span class="special">*</span> <span class="identifier">allocate</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">bytes</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">align</span> <span class="special">);</span>
+    <span class="keyword">void</span> <span class="identifier">deallocate</span><span class="special">(</span> <span class="keyword">void</span><span class="special">*</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">bytes</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">align</span> <span class="special">);</span>
+<span class="special">};</span>
+</pre>
+<h5>
+<a name="json.usage.storage.h5"></a>
+        <span class="phrase"><a name="json.usage.storage.models"></a></span><a class="link" href="storage.html#json.usage.storage.models">Models</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            <a class="link" href="../ref/boost__json__pool.html" title="pool"><code class="computeroutput"><span class="identifier">pool</span></code></a>
+          </li></ul></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="numbers.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../usage.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="parsing.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

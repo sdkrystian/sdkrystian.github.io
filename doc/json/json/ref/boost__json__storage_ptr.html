@@ -1,0 +1,202 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>storage_ptr</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../ref.html" title="Reference">
+<link rel="prev" href="boost__json__storage/deallocate.html" title="storage::deallocate">
+<link rel="next" href="boost__json__storage_ptr/make_storage.html" title="storage_ptr::make_storage">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__storage/deallocate.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__storage_ptr/make_storage.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.ref.boost__json__storage_ptr"></a><a class="link" href="boost__json__storage_ptr.html" title="storage_ptr">storage_ptr</a>
+</h3></div></div></div>
+<p>
+        Manages a type-erased storage object.
+      </p>
+<h5>
+<a name="json.ref.boost__json__storage_ptr.h0"></a>
+        <span class="phrase"><a name="json.ref.boost__json__storage_ptr.synopsis"></a></span><a class="link" href="boost__json__storage_ptr.html#json.ref.boost__json__storage_ptr.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json/storage_ptr.hpp" target="_top">boost/json/storage_ptr.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">storage_ptr</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__storage_ptr.h1"></a>
+        <span class="phrase"><a name="json.ref.boost__json__storage_ptr.member_functions"></a></span><a class="link" href="boost__json__storage_ptr.html#json.ref.boost__json__storage_ptr.member_functions">Member
+        Functions</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__storage_ptr/get.html" title="storage_ptr::get">get</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Return a pointer to the storage object.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__storage_ptr/operator__star_.html" title="storage_ptr::operator *">operator
+                  *</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Return a reference to the storage object.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__storage_ptr/operator_arrow_.html" title="storage_ptr::operator-&gt;">operator-&gt;</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Return a pointer to the storage object.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__storage_ptr/operator_eq_.html" title="storage_ptr::operator=">operator=</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Move assignment.
+                </p>
+                <p>
+                  Copy assignment.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__storage_ptr/storage_ptr.html" title="storage_ptr::storage_ptr">storage_ptr</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default constructor.
+                </p>
+                <p>
+                  Construct a pointer to default storage.
+                </p>
+                <p>
+                  Move constructor.
+                </p>
+                <p>
+                  Copy constructor.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__storage_ptr/_storage_ptr.html" title="storage_ptr::~storage_ptr">~storage_ptr</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Destructor.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="json.ref.boost__json__storage_ptr.h2"></a>
+        <span class="phrase"><a name="json.ref.boost__json__storage_ptr.friends"></a></span><a class="link" href="boost__json__storage_ptr.html#json.ref.boost__json__storage_ptr.friends">Friends</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__storage_ptr/make_storage.html" title="storage_ptr::make_storage">make_storage</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Create a new, counted storage object and return a pointer to it.
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
+<h5>
+<a name="json.ref.boost__json__storage_ptr.h3"></a>
+        <span class="phrase"><a name="json.ref.boost__json__storage_ptr.description"></a></span><a class="link" href="boost__json__storage_ptr.html#json.ref.boost__json__storage_ptr.description">Description</a>
+      </h5>
+<p>
+        This container is used to hold a shared reference to a <a class="link" href="boost__json__storage.html" title="storage"><code class="computeroutput"><span class="identifier">storage</span></code></a> object.
+      </p>
+<p>
+        Convenience header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json.hpp" target="_top">boost/json.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__storage/deallocate.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__storage_ptr/make_storage.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

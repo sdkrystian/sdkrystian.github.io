@@ -1,0 +1,115 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>is_storage</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../ref.html" title="Reference">
+<link rel="prev" href="boost__json__error_condition.html" title="error_condition">
+<link rel="next" href="boost__json__has_to_value.html" title="has_to_value">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__error_condition.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__has_to_value.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.ref.boost__json__is_storage"></a><a class="link" href="boost__json__is_storage.html" title="is_storage">is_storage</a>
+</h3></div></div></div>
+<p>
+        <a class="indexterm" name="idm1529341424"></a>
+      </p>
+<p>
+        Metafunction to determine if a type meets the requirements of Storage.
+      </p>
+<h5>
+<a name="json.ref.boost__json__is_storage.h0"></a>
+        <span class="phrase"><a name="json.ref.boost__json__is_storage.synopsis"></a></span><a class="link" href="boost__json__is_storage.html#json.ref.boost__json__is_storage.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json/storage.hpp" target="_top">boost/json/storage.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
+    <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">is_storage</span> <span class="special">=</span> <span class="emphasis"><em>see-below</em></span><span class="special">;</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__is_storage.h1"></a>
+        <span class="phrase"><a name="json.ref.boost__json__is_storage.description"></a></span><a class="link" href="boost__json__is_storage.html#json.ref.boost__json__is_storage.description">Description</a>
+      </h5>
+<p>
+        This type alias is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">true_type</span></code> if the type <code class="computeroutput"><span class="identifier">T</span></code>
+        satisfies the syntactic requirements of <span class="emphasis"><em>Storage</em></span>, otherwise
+        it is equivalent to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">false_type</span></code>.
+      </p>
+<h5>
+<a name="json.ref.boost__json__is_storage.h2"></a>
+        <span class="phrase"><a name="json.ref.boost__json__is_storage.exemplar"></a></span><a class="link" href="boost__json__is_storage.html#json.ref.boost__json__is_storage.exemplar">Exemplar</a>
+      </h5>
+<p>
+        For the following declaration, <code class="computeroutput"><span class="identifier">is_storage</span><span class="special">&lt;</span><span class="identifier">Storage</span><span class="special">&gt;</span></code> is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">true_type</span></code>:
+      </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Storage</span>
+<span class="special">{</span>
+    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">id</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="identifier">static_constexpr</span> <span class="keyword">bool</span> <span class="identifier">need_free</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
+
+    <span class="keyword">void</span><span class="special">*</span> <span class="identifier">allocate</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">bytes</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">align</span> <span class="special">);</span>
+    <span class="keyword">void</span> <span class="identifier">deallocate</span><span class="special">(</span> <span class="keyword">void</span><span class="special">*</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">bytes</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">align</span> <span class="special">);</span>
+<span class="special">};</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__is_storage.h3"></a>
+        <span class="phrase"><a name="json.ref.boost__json__is_storage.template_parameters"></a></span><a class="link" href="boost__json__is_storage.html#json.ref.boost__json__is_storage.template_parameters">Template Parameters</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Type
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">T</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The type to check.
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
+<p>
+        Convenience header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json.hpp" target="_top">boost/json.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__error_condition.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__has_to_value.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

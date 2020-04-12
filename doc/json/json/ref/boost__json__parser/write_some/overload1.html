@@ -1,0 +1,162 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>parser::write_some (1 of 2 overloads)</title>
+<link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Boost.JSON">
+<link rel="up" href="../write_some.html" title="parser::write_some">
+<link rel="prev" href="../write_some.html" title="parser::write_some">
+<link rel="next" href="overload2.html" title="parser::write_some (2 of 2 overloads)">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../write_some.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../write_some.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="overload2.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="json.ref.boost__json__parser.write_some.overload1"></a><a class="link" href="overload1.html" title="parser::write_some (1 of 2 overloads)">parser::write_some
+          (1 of 2 overloads)</a>
+</h5></div></div></div>
+<p>
+            (Inherited from <a class="link" href="../../boost__json__basic_parser.html" title="basic_parser"><code class="computeroutput"><span class="identifier">basic_parser</span></code></a>)
+          </p>
+<p>
+            Parse JSON incrementally.
+          </p>
+<h6>
+<a name="json.ref.boost__json__parser.write_some.overload1.h0"></a>
+            <span class="phrase"><a name="json.ref.boost__json__parser.write_some.overload1.synopsis"></a></span><a class="link" href="overload1.html#json.ref.boost__json__parser.write_some.overload1.synopsis">Synopsis</a>
+          </h6>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
+<span class="identifier">write_some</span><span class="special">(</span>
+    <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">data</span><span class="special">,</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span>
+    <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="identifier">ec</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="json.ref.boost__json__parser.write_some.overload1.h1"></a>
+            <span class="phrase"><a name="json.ref.boost__json__parser.write_some.overload1.description"></a></span><a class="link" href="overload1.html#json.ref.boost__json__parser.write_some.overload1.description">Description</a>
+          </h6>
+<p>
+            This function parses the JSON in the specified buffer, emitting SAX parsing
+            events by calling the derived class. The parse proceeds from the current
+            state, which is at the beginning of a new JSON or in the middle of the
+            current JSON if any characters were already parsed.
+          </p>
+<p>
+            The characters in the buffer are processed starting from the beginning,
+            until one of the following conditions is met:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                All of the characters in the buffer have been parsed, or
+              </li>
+<li class="listitem">
+                Some of the characters in the buffer have been parsed and the JSON
+                is complete, or
+              </li>
+<li class="listitem">
+                A parsing error occurs.
+              </li>
+</ul></div>
+<p>
+            The supplied buffer does not need to contain the entire JSON. Subsequent
+            calls can provide more serialized data, allowing JSON to be processed
+            incrementally. The end of the serialized JSON can be indicated by calling
+            <a class="link" href="../finish/overload4.html" title="parser::finish (4 of 4 overloads)"><code class="computeroutput"><span class="identifier">finish</span><span class="special">()</span></code></a>.
+          </p>
+<h6>
+<a name="json.ref.boost__json__parser.write_some.overload1.h2"></a>
+            <span class="phrase"><a name="json.ref.boost__json__parser.write_some.overload1.complexity"></a></span><a class="link" href="overload1.html#json.ref.boost__json__parser.write_some.overload1.complexity">Complexity</a>
+          </h6>
+<p>
+            Linear in <code class="computeroutput"><span class="identifier">size</span></code>.
+          </p>
+<h6>
+<a name="json.ref.boost__json__parser.write_some.overload1.h3"></a>
+            <span class="phrase"><a name="json.ref.boost__json__parser.write_some.overload1.parameters"></a></span><a class="link" href="overload1.html#json.ref.boost__json__parser.write_some.overload1.parameters">Parameters</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                    <p>
+                      Name
+                    </p>
+                  </th>
+<th>
+                    <p>
+                      Description
+                    </p>
+                  </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">data</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      A pointer to a buffer of <code class="computeroutput"><span class="identifier">size</span></code>
+                      characters to parse.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">size</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      The number of characters pointed to by <code class="computeroutput"><span class="identifier">data</span></code>.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">ec</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Set to the error, if any occurred.
+                    </p>
+                  </td>
+</tr>
+</tbody>
+</table></div>
+<h6>
+<a name="json.ref.boost__json__parser.write_some.overload1.h4"></a>
+            <span class="phrase"><a name="json.ref.boost__json__parser.write_some.overload1.return_value"></a></span><a class="link" href="overload1.html#json.ref.boost__json__parser.write_some.overload1.return_value">Return
+            Value</a>
+          </h6>
+<p>
+            The number of characters successfully parsed, which may be smaller than
+            <code class="computeroutput"><span class="identifier">size</span></code>.
+          </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../write_some.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../write_some.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="overload2.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

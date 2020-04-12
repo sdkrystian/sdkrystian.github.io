@@ -1,0 +1,251 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Parsing</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../usage.html" title="Usage">
+<link rel="prev" href="storage.html" title="Storage">
+<link rel="next" href="serializing.html" title="Serializing">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="storage.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../usage.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="serializing.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.usage.parsing"></a><a class="link" href="parsing.html" title="Parsing">Parsing</a>
+</h3></div></div></div>
+<p>
+        Parsing is the process where a serialized JSON is validated and decomposed
+        into elements. The library provides these functions and types to assist with
+        parsing:
+      </p>
+<div class="table">
+<a name="json.usage.parsing.parsing_functions_and_types"></a><p class="title"><b>Table&#160;4.&#160;Parsing Functions and Types</b></p>
+<div class="table-contents"><table class="table" summary="Parsing Functions and Types">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__parse.html" title="parse"><code class="computeroutput"><span class="identifier">parse</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Parse a string containing a complete serialized JSON, and return
+                  a <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__parser.html" title="parser"><code class="computeroutput"><span class="identifier">parser</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  A stateful DOM parser object which may be used to efficiently parse
+                  a series of JSONs incrementally, returning each result as a <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="../ref/boost__json__basic_parser.html" title="basic_parser"><code class="computeroutput"><span class="identifier">basic_parser</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  The SAX parser base class which may be derived from in order to
+                  implement custom strategies for representing the parsed JSON.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+        The <code class="computeroutput"><span class="identifier">parse</span></code> function provides
+        a succinct interface for converting a JSON to a <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a> in a single function call
+        that uses exceptions to indicate errors:
+      </p>
+<pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">parse</span><span class="special">(</span> <span class="string">"[1,2,3,4,5]"</span> <span class="special">);</span>
+</pre>
+<p>
+        An overload is provided to receive an error code upon failure instead of
+        an exception:
+      </p>
+<pre class="programlisting"><span class="identifier">error_code</span> <span class="identifier">ec</span><span class="special">;</span>
+<span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">parse</span><span class="special">(</span> <span class="string">"[1,2,3,4,5]"</span><span class="special">,</span> <span class="identifier">ec</span> <span class="special">);</span>
+<span class="keyword">if</span><span class="special">(</span> <span class="identifier">ec</span> <span class="special">)</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Parsing failed: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">ec</span><span class="special">.</span><span class="identifier">message</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
+</pre>
+<p>
+        The calls above will produce values that use the default storage. Each parse
+        function allows an additional parameter specifying the storage to use. Here
+        we start the parser with a new instance of <a class="link" href="../ref/boost__json__pool.html" title="pool"><code class="computeroutput"><span class="identifier">pool</span></code></a> for the resulting value:
+      </p>
+<pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">parse</span><span class="special">(</span> <span class="string">"[1,2,3,4,5]"</span><span class="special">,</span> <span class="identifier">make_storage</span><span class="special">&lt;</span><span class="identifier">pool</span><span class="special">&gt;()</span> <span class="special">);</span>
+</pre>
+<p>
+        These free functions use a temporary <a class="link" href="../ref/boost__json__parser.html" title="parser"><code class="computeroutput"><span class="identifier">parser</span></code></a> instance, which allocates
+        internal structures to assist with performance. If a program needs to parse
+        multiple JSONs sequentially, performance can be improved by declaring the
+        parser instance explicitly and using the parser's buffer-oriented interface.
+        This stateful interface uses the functions <a class="link" href="../ref/boost__json__parser/write_some.html" title="parser::write_some"><code class="computeroutput"><span class="identifier">write_some</span></code></a> and <a class="link" href="../ref/boost__json__parser/write.html" title="parser::write"><code class="computeroutput"><span class="identifier">write</span></code></a> to supply zero or more sequential
+        character buffers representing the JSON, while the function <a class="link" href="../ref/boost__json__parser/finish.html" title="parser::finish"><code class="computeroutput"><span class="identifier">finish</span></code></a> is used to inform the parser
+        that an optional final character buffer represents the end of the JSON. This
+        example parses a complete JSON using the stateful API:
+      </p>
+<pre class="programlisting"><span class="identifier">parser</span> <span class="identifier">p</span><span class="special">;</span>
+
+<span class="comment">// This must be called once before parsing every new JSON.</span>
+<span class="identifier">p</span><span class="special">.</span><span class="identifier">start</span><span class="special">();</span>
+
+<span class="comment">// Write the entire character buffer, indicating</span>
+<span class="comment">// to the parser that there is no more data.</span>
+<span class="identifier">p</span><span class="special">.</span><span class="identifier">finish</span><span class="special">(</span> <span class="string">"[1,2,3,4,5]"</span><span class="special">,</span> <span class="number">11</span> <span class="special">);</span>
+
+<span class="comment">// Take ownership of the resulting value.</span>
+<span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">p</span><span class="special">.</span><span class="identifier">release</span><span class="special">();</span>
+
+<span class="comment">// At this point the parser may be re-used by calling p.start() again.</span>
+</pre>
+<p>
+        Explicit parser instances may also be used to process serialized JSON incrementally.
+        In the code that follows the JSON is represented by two consecutive buffers,
+        and the overloads which return the error code are used instead:
+      </p>
+<pre class="programlisting"><span class="identifier">parser</span> <span class="identifier">p</span><span class="special">;</span>
+<span class="identifier">error_code</span> <span class="identifier">ec</span><span class="special">;</span>
+
+<span class="comment">// This must be called once before parsing every new JSON</span>
+<span class="identifier">p</span><span class="special">.</span><span class="identifier">start</span><span class="special">();</span>
+
+<span class="comment">// Write the first part of the buffer</span>
+<span class="identifier">p</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span> <span class="string">"[1,2,"</span><span class="special">,</span> <span class="number">5</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">);</span>
+
+<span class="comment">// Write the remaining part of the character buffer,</span>
+<span class="comment">// indicating to the parser that there is no more data.</span>
+<span class="keyword">if</span><span class="special">(!</span> <span class="identifier">ec</span> <span class="special">)</span>
+    <span class="identifier">p</span><span class="special">.</span><span class="identifier">finish</span><span class="special">(</span> <span class="string">"3,4,5]"</span><span class="special">,</span> <span class="number">6</span><span class="special">,</span> <span class="identifier">ec</span> <span class="special">);</span>
+
+<span class="comment">// Take ownership of the resulting value.</span>
+<span class="keyword">if</span><span class="special">(!</span> <span class="identifier">ec</span><span class="special">)</span>
+    <span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">p</span><span class="special">.</span><span class="identifier">release</span><span class="special">();</span>
+
+<span class="comment">// At this point the parser may be re-used by calling p.start() again.</span>
+</pre>
+<h5>
+<a name="json.usage.parsing.h0"></a>
+        <span class="phrase"><a name="json.usage.parsing.storage"></a></span><a class="link" href="parsing.html#json.usage.parsing.storage">Storage</a>
+      </h5>
+<p>
+        When <a class="link" href="../ref/boost__json__parser/start.html" title="parser::start"><code class="computeroutput"><span class="identifier">start</span></code></a>
+        is called with no arguments, the parser constructs the resulting <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a> using the default storage.
+        Alternatively, the storage to use may be supplied as an argument. This example
+        uses a scoped instance of block storage:
+      </p>
+<pre class="programlisting"><span class="special">{</span>
+    <span class="identifier">parser</span> <span class="identifier">p</span><span class="special">;</span>
+    <span class="identifier">error_code</span> <span class="identifier">ec</span><span class="special">;</span>
+
+    <span class="comment">// Declare a new, scoped instance of the block storage</span>
+    <span class="identifier">scoped_storage</span><span class="special">&lt;</span> <span class="identifier">pool</span> <span class="special">&gt;</span> <span class="identifier">sp</span><span class="special">;</span>
+
+    <span class="comment">// Use the scoped instance for the parsed value</span>
+    <span class="identifier">p</span><span class="special">.</span><span class="identifier">start</span><span class="special">(</span> <span class="identifier">sp</span> <span class="special">);</span>
+
+    <span class="comment">// Write the entire JSON</span>
+    <span class="identifier">p</span><span class="special">.</span><span class="identifier">finish</span><span class="special">(</span> <span class="string">"[1,2,3,4,5]"</span><span class="special">,</span> <span class="number">11</span><span class="special">,</span> <span class="identifier">ec</span> <span class="special">);</span>
+
+    <span class="comment">// The value will use the instance of block storage created above</span>
+    <span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">p</span><span class="special">.</span><span class="identifier">release</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<h5>
+<a name="json.usage.parsing.h1"></a>
+        <span class="phrase"><a name="json.usage.parsing.sax"></a></span><a class="link" href="parsing.html#json.usage.parsing.sax">SAX</a>
+      </h5>
+<p>
+        Users who wish to implement custom parsing strategies may declare their own
+        type derived from <a class="link" href="../ref/boost__json__basic_parser.html" title="basic_parser"><code class="computeroutput"><span class="identifier">basic_parser</span></code></a>, and implement the
+        required virtual functions representing the SAX event interface. In this
+        example we define the "null" parser, which does nothing with the
+        parsed results, to use in writing a function that validates a string to determine
+        if it is valid JSON:
+      </p>
+<pre class="programlisting"><span class="keyword">bool</span>
+<span class="identifier">validate</span><span class="special">(</span> <span class="identifier">string_view</span> <span class="identifier">s</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// The null parser discards all the data</span>
+
+    <span class="keyword">struct</span> <span class="identifier">null_parser</span> <span class="special">:</span> <span class="identifier">basic_parser</span>
+    <span class="special">{</span>
+        <span class="identifier">null_parser</span><span class="special">()</span> <span class="special">{}</span>
+        <span class="special">~</span><span class="identifier">null_parser</span><span class="special">()</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_document_begin</span><span class="special">(</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_document_end</span><span class="special">(</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_object_begin</span><span class="special">(</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_object_end</span><span class="special">(</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_array_begin</span><span class="special">(</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_array_end</span><span class="special">(</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_key_part</span><span class="special">(</span> <span class="identifier">string_view</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_key</span><span class="special">(</span> <span class="identifier">string_view</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_string_part</span><span class="special">(</span> <span class="identifier">string_view</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_string</span><span class="special">(</span> <span class="identifier">string_view</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_int64</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">int64_t</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_uint64</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_double</span><span class="special">(</span> <span class="keyword">double</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_bool</span><span class="special">(</span> <span class="keyword">bool</span><span class="special">,</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+        <span class="keyword">void</span> <span class="identifier">on_null</span><span class="special">(</span> <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="special">)</span> <span class="identifier">override</span> <span class="special">{}</span>
+    <span class="special">};</span>
+
+    <span class="comment">// Parse with the null parser and return false on error</span>
+    <span class="identifier">null_parser</span> <span class="identifier">p</span><span class="special">;</span>
+    <span class="identifier">error_code</span> <span class="identifier">ec</span><span class="special">;</span>
+    <span class="identifier">p</span><span class="special">.</span><span class="identifier">finish</span><span class="special">(</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">data</span><span class="special">(),</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">size</span><span class="special">(),</span> <span class="identifier">ec</span> <span class="special">);</span>
+    <span class="keyword">if</span><span class="special">(</span> <span class="identifier">ec</span> <span class="special">)</span>
+        <span class="keyword">return</span> <span class="keyword">false</span><span class="special">;</span>
+
+    <span class="comment">// The string is valid JSON.</span>
+    <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="storage.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../usage.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="serializing.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

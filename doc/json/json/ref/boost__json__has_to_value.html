@@ -1,0 +1,86 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>has_to_value</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../ref.html" title="Reference">
+<link rel="prev" href="boost__json__is_storage.html" title="is_storage">
+<link rel="next" href="boost__json__has_value_cast.html" title="has_value_cast">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__is_storage.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__has_value_cast.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.ref.boost__json__has_to_value"></a><a class="link" href="boost__json__has_to_value.html" title="has_to_value">has_to_value</a>
+</h3></div></div></div>
+<p>
+        <a class="indexterm" name="idm1529281520"></a>
+      </p>
+<p>
+        Determine if T can be converted to a JSON value.
+      </p>
+<h5>
+<a name="json.ref.boost__json__has_to_value.h0"></a>
+        <span class="phrase"><a name="json.ref.boost__json__has_to_value.synopsis"></a></span><a class="link" href="boost__json__has_to_value.html#json.ref.boost__json__has_to_value.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json/to_value.hpp" target="_top">boost/json/to_value.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
+    <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">has_to_value</span> <span class="special">=</span> <span class="emphasis"><em>see-below</em></span><span class="special">;</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__has_to_value.h1"></a>
+        <span class="phrase"><a name="json.ref.boost__json__has_to_value.description"></a></span><a class="link" href="boost__json__has_to_value.html#json.ref.boost__json__has_to_value.description">Description</a>
+      </h5>
+<p>
+        This template type alias is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">true_type</span></code>
+        when one or more of the following are true:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>
+            is constructible with the signature <code class="computeroutput"><span class="special">(</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">storage_ptr</span><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            A public non-static member function <code class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">to_json</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;</span> <span class="identifier">jv</span>
+            <span class="special">)</span> <span class="keyword">const</span></code>
+            exists.
+          </li>
+<li class="listitem">
+            A specialization of <a class="link" href="boost__json__to_value_traits.html" title="to_value_traits"><code class="computeroutput"><span class="identifier">to_value_traits</span></code></a> exists which
+            contains the public static member function <code class="computeroutput"><span class="identifier">to_value_traits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span> <span class="identifier">assign</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;,</span> <span class="identifier">T</span>
+            <span class="keyword">const</span><span class="special">&amp;)</span></code>.
+          </li>
+<li class="listitem">
+            The type T matches one of the generic types supported by the library.
+          </li>
+</ul></div>
+<p>
+        Otherwise, this template type alias is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">false_type</span></code>.
+      </p>
+<p>
+        Convenience header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json.hpp" target="_top">boost/json.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__is_storage.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__has_value_cast.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

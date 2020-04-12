@@ -1,0 +1,319 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>parser</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../ref.html" title="Reference">
+<link rel="prev" href="boost__json__object_too_large/object_too_large.html" title="object_too_large::object_too_large">
+<link rel="next" href="boost__json__parser/_parser.html" title="parser::~parser">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__object_too_large/object_too_large.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__parser/_parser.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.ref.boost__json__parser"></a><a class="link" href="boost__json__parser.html" title="parser">parser</a>
+</h3></div></div></div>
+<p>
+        A DOM parser for serialized JSON.
+      </p>
+<h5>
+<a name="json.ref.boost__json__parser.h0"></a>
+        <span class="phrase"><a name="json.ref.boost__json__parser.synopsis"></a></span><a class="link" href="boost__json__parser.html#json.ref.boost__json__parser.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json/parser.hpp" target="_top">boost/json/parser.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">parser</span> <span class="special">:</span>
+    <span class="keyword">public</span> <span class="identifier">basic_parser</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__parser.h1"></a>
+        <span class="phrase"><a name="json.ref.boost__json__parser.member_functions"></a></span><a class="link" href="boost__json__parser.html#json.ref.boost__json__parser.member_functions">Member
+        Functions</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/clear.html" title="parser::clear">clear</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Discard all parsed JSON results.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/depth.html" title="parser::depth">depth</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Returns the current depth of the JSON being parsed.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/finish.html" title="parser::finish">finish</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Parse JSON incrementally.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/is_done.html" title="parser::is_done">is_done</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Return true if a complete JSON has been parsed.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/max_depth.html" title="parser::max_depth">max_depth</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Returns the maximum allowed depth of input JSON.
+                </p>
+                <p>
+                  Set the maximum allowed depth of input JSON.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/parser.html" title="parser::parser">parser</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default constructor.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/release.html" title="parser::release">release</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Return the parsed JSON as a <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/reserve.html" title="parser::reserve">reserve</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Reserve internal storage space.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/start.html" title="parser::start">start</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Start parsing JSON incrementally.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/write.html" title="parser::write">write</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Parse JSON incrementally.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/write_some.html" title="parser::write_some">write_some</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Parse JSON incrementally.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/_parser.html" title="parser::~parser">~parser</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Destructor.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="json.ref.boost__json__parser.h2"></a>
+        <span class="phrase"><a name="json.ref.boost__json__parser.protected_member_functions"></a></span><a class="link" href="boost__json__parser.html#json.ref.boost__json__parser.protected_member_functions">Protected
+        Member Functions</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/reset.html" title="parser::reset">reset</a></strong></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  Reset the state, to parse a new document.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/restore_state.html" title="parser::restore_state">restore_state</a></strong></span>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="bold"><strong><a class="link" href="boost__json__parser/save_state.html" title="parser::save_state">save_state</a></strong></span>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="json.ref.boost__json__parser.h3"></a>
+        <span class="phrase"><a name="json.ref.boost__json__parser.description"></a></span><a class="link" href="boost__json__parser.html#json.ref.boost__json__parser.description">Description</a>
+      </h5>
+<p>
+        This parser is used to incrementally parse JSON from character buffers into
+        a <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>
+        container.
+      </p>
+<h5>
+<a name="json.ref.boost__json__parser.h4"></a>
+        <span class="phrase"><a name="json.ref.boost__json__parser.usage"></a></span><a class="link" href="boost__json__parser.html#json.ref.boost__json__parser.usage">Usage</a>
+      </h5>
+<p>
+        Before parsing a new JSON, the function <a class="link" href="boost__json__parser/start.html" title="parser::start"><code class="computeroutput"><span class="identifier">start</span></code></a> must be called, optionally
+        passing the storage pointer to be used by the <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a> container into which the parsed
+        results are stored. After the parse is started, the functions <a class="link" href="boost__json__parser/write_some/overload1.html" title="parser::write_some (1 of 2 overloads)"><code class="computeroutput"><span class="identifier">write_some</span></code></a>, <a class="link" href="boost__json__parser/write/overload1.html" title="parser::write (1 of 2 overloads)"><code class="computeroutput"><span class="identifier">write</span></code></a>, and <a class="link" href="boost__json__parser/finish/overload1.html" title="parser::finish (1 of 4 overloads)"><code class="computeroutput"><span class="identifier">finish</span></code></a> may be called to provide
+        successive buffers of characters of the JSON. The caller can check that the
+        parse is complete by calling <a class="link" href="boost__json__parser/is_done.html" title="parser::is_done"><code class="computeroutput"><span class="identifier">is_done</span></code></a>, or that a non-successful
+        error code is returned.
+      </p>
+<h5>
+<a name="json.ref.boost__json__parser.h5"></a>
+        <span class="phrase"><a name="json.ref.boost__json__parser.incremental_parsing"></a></span><a class="link" href="boost__json__parser.html#json.ref.boost__json__parser.incremental_parsing">Incremental
+        Parsing</a>
+      </h5>
+<p>
+        The <a class="link" href="boost__json__parser/write_some/overload1.html" title="parser::write_some (1 of 2 overloads)"><code class="computeroutput"><span class="identifier">write_some</span></code></a> function allows partial
+        data to be written. This is useful when not all of the serialized JSON is
+        present at once and it is desired to process the data as it becomes available,
+        such as when reading from a network socket or other device. The incremental
+        interface may also be used to bound the amount of work performed in each
+        parsing cycle.
+      </p>
+<p>
+        The parser may dynamically allocate intermediate storage as needed to accommodate
+        the nesting level of the JSON being parsed. This storage is freed when the
+        parser is destroyed, allowing the parser to cheaply re-use this memory when
+        parsing subsequent JSONs, improving performance.
+      </p>
+<p>
+        Convenience header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json.hpp" target="_top">boost/json.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__object_too_large/object_too_large.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__parser/_parser.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

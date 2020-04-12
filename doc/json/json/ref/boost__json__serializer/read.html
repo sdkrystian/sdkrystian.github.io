@@ -1,0 +1,129 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>serializer::read</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Boost.JSON">
+<link rel="up" href="../boost__json__serializer.html" title="serializer">
+<link rel="prev" href="reset.html" title="serializer::reset">
+<link rel="next" href="../boost__json__stack_overflow.html" title="stack_overflow">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="reset.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost__json__serializer.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../boost__json__stack_overflow.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="json.ref.boost__json__serializer.read"></a><a class="link" href="read.html" title="serializer::read">serializer::read</a>
+</h4></div></div></div>
+<p>
+          <a class="indexterm" name="idm1542082784"></a>
+        </p>
+<p>
+          Read the next buffer of serialized JSON.
+        </p>
+<h6>
+<a name="json.ref.boost__json__serializer.read.h0"></a>
+          <span class="phrase"><a name="json.ref.boost__json__serializer.read.synopsis"></a></span><a class="link" href="read.html#json.ref.boost__json__serializer.read.synopsis">Synopsis</a>
+        </h6>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
+<span class="identifier">read</span><span class="special">(</span>
+    <span class="keyword">char</span><span class="special">*</span> <span class="identifier">dest</span><span class="special">,</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="json.ref.boost__json__serializer.read.h1"></a>
+          <span class="phrase"><a name="json.ref.boost__json__serializer.read.description"></a></span><a class="link" href="read.html#json.ref.boost__json__serializer.read.description">Description</a>
+        </h6>
+<p>
+          This function attempts to fill the caller provided buffer starting at
+          <code class="computeroutput"><span class="identifier">dest</span></code> with up to <code class="computeroutput"><span class="identifier">size</span></code> characters of the serialized JSON
+          that represents the value. If the buffer is not large enough, multiple
+          calls may be required.
+        </p>
+<h6>
+<a name="json.ref.boost__json__serializer.read.h2"></a>
+          <span class="phrase"><a name="json.ref.boost__json__serializer.read.example"></a></span><a class="link" href="read.html#json.ref.boost__json__serializer.read.example">Example</a>
+        </h6>
+<p>
+          This demonstrates how the serializer may be used to print a JSON value
+          to an output stream.
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">print</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">jv</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">serializer</span> <span class="identifier">sr</span><span class="special">(</span> <span class="identifier">jv</span> <span class="special">);</span>
+    <span class="keyword">while</span><span class="special">(</span> <span class="special">!</span> <span class="identifier">sr</span><span class="special">.</span><span class="identifier">done</span><span class="special">()</span> <span class="special">)</span>
+    <span class="special">{</span>
+        <span class="keyword">char</span> <span class="identifier">buf</span><span class="special">[</span><span class="number">1024</span><span class="special">];</span>
+        <span class="keyword">auto</span> <span class="keyword">const</span> <span class="identifier">n</span> <span class="special">=</span> <span class="identifier">sr</span><span class="special">.</span><span class="identifier">read</span><span class="special">(</span> <span class="identifier">buf</span><span class="special">,</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">buf</span><span class="special">)</span> <span class="special">);</span>
+        <span class="identifier">os</span> <span class="special">&lt;&lt;</span> <span class="identifier">string_view</span><span class="special">(</span> <span class="identifier">buf</span><span class="special">,</span> <span class="identifier">n</span> <span class="special">);</span>
+    <span class="special">}</span>
+<span class="special">}</span>
+</pre>
+<h6>
+<a name="json.ref.boost__json__serializer.read.h3"></a>
+          <span class="phrase"><a name="json.ref.boost__json__serializer.read.exception_safety"></a></span><a class="link" href="read.html#json.ref.boost__json__serializer.read.exception_safety">Exception
+          Safety</a>
+        </h6>
+<p>
+          Strong guarantee. Calls to <a class="link" href="../boost__json__storage/allocate.html" title="storage::allocate"><code class="computeroutput"><span class="identifier">storage</span><span class="special">::</span><span class="identifier">allocate</span></code></a> may throw.
+        </p>
+<h6>
+<a name="json.ref.boost__json__serializer.read.h4"></a>
+          <span class="phrase"><a name="json.ref.boost__json__serializer.read.exceptions"></a></span><a class="link" href="read.html#json.ref.boost__json__serializer.read.exceptions">Exceptions</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Type
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Thrown On
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">logic_error</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    if no value is set.
+                  </p>
+                </td>
+</tr></tbody>
+</table></div>
+<h6>
+<a name="json.ref.boost__json__serializer.read.h5"></a>
+          <span class="phrase"><a name="json.ref.boost__json__serializer.read.return_value"></a></span><a class="link" href="read.html#json.ref.boost__json__serializer.read.return_value">Return Value</a>
+        </h6>
+<p>
+          The number of characters written to <code class="computeroutput"><span class="identifier">dest</span></code>.
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="reset.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost__json__serializer.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../boost__json__stack_overflow.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

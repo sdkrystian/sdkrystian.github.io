@@ -1,0 +1,432 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Benchmarks</title>
+<link rel="stylesheet" href="../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Boost.JSON">
+<link rel="up" href="../index.html" title="Boost.JSON">
+<link rel="prev" href="comparison.html" title="Comparison to Other Libraries">
+<link rel="next" href="ref.html" title="Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="comparison.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="ref.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="json.benchmarks"></a><a class="link" href="benchmarks.html" title="Benchmarks">Benchmarks</a>
+</h2></div></div></div>
+<p>
+      In this section we compare the performance of Boost.JSON against the other
+      two important libraries of interest, RapidJson which is known for its considerable
+      performance and nlohmann which underperforms but is feature-rich. The bench
+      program measures the throughput of serialization and parsing for the various
+      JSON files located in the data directory. It tests these implementations:
+    </p>
+<div class="table">
+<a name="json.benchmarks.implementations"></a><p class="title"><b>Table&#160;6.&#160;Implementations</b></p>
+<div class="table-contents"><table class="table" summary="Implementations">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Name
+              </p>
+            </th>
+<th>
+              <p>
+                Description
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>boost(pool)</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                Parses the input using a <a class="link" href="ref/boost__json__pool.html" title="pool"><code class="computeroutput"><span class="identifier">pool</span></code></a>, which is optimized
+                for parsing but not subsequent modification. The <a class="link" href="ref/boost__json__parser.html" title="parser"><code class="computeroutput"><span class="identifier">parser</span></code></a> object is reused
+                between trials, allowing temporary memory allocated by the implementation
+                to persist and improve performance.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>boost</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                Parses the input using the default storage, which uses global operator
+                <code class="computeroutput"><span class="keyword">new</span></code> and <code class="computeroutput"><span class="keyword">delete</span></code>, and is designed for general
+                use including mutation of the document after it is parsed. The <a class="link" href="ref/boost__json__parser.html" title="parser"><code class="computeroutput"><span class="identifier">parser</span></code></a>
+                object is reused between trials, allowing temporary memory allocated
+                by the implementation to persist and improve performance.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>rapidjson(pool)</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                Parses the input using an instance of <a href="https://rapidjson.org/classrapidjson_1_1_memory_pool_allocator.html" target="_top"><code class="computeroutput"><span class="identifier">MemoryPoolAllocator</span></code></a>, which
+                is optimized for parsing but not subsequent modification. The <a href="https://rapidjson.org/classrapidjson_1_1_generic_document.html" target="_top"><code class="computeroutput"><span class="identifier">Document</span></code></a> object holding
+                temporary memory is not reused between trials, otherwise memory consumption
+                grows without bounds and invalidates the benchmark.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>rapidjson</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                Parses the input using an instance of <a href="https://rapidjson.org/classrapidjson_1_1_crt_allocator.html" target="_top"><code class="computeroutput"><span class="identifier">CrtAllocator</span></code></a>, which uses
+                global operators <code class="computeroutput"><span class="keyword">new</span></code>
+                and <code class="computeroutput"><span class="keyword">delete</span></code>, and is designed
+                for general use including mutation of the document after it is parsed.
+                <a href="https://rapidjson.org/classrapidjson_1_1_generic_document.html" target="_top"><code class="computeroutput"><span class="identifier">Document</span></code></a> object holding
+                temporary memory is not reused between trials, otherwise memory consumption
+                grows without bounds and invalidates the benchmark.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>nlohmann</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                Parses the input using the static member function <a href="https://nlohmann.github.io/json/classnlohmann_1_1basic__json_ab330c13ba254ea41fbc1c52c5c610f45.html" target="_top"><code class="computeroutput"><span class="identifier">json</span><span class="special">::</span><span class="identifier">parse</span></code></a>, which uses the default
+                <code class="computeroutput"><span class="identifier">std</span></code> allocator, and
+                is designed for general use including mutation of the document after
+                it is parsed. This library does not provide an interface to reuse
+                temporary storage used during parsing or serialization.
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><h4>
+<a name="json.benchmarks.h0"></a>
+      <span class="phrase"><a name="json.benchmarks.methodology"></a></span><a class="link" href="benchmarks.html#json.benchmarks.methodology">Methodology</a>
+    </h4>
+<p>
+      The input files are all loaded first. Then each configuration is run for a
+      sufficient number of trials to last at least 5 seconds. The elapsed time, number
+      of invocations (of parse or serialize), and bytes transferred are emitted as
+      a sample along with a calculation of through put expressed in megabytes per
+      second. Several samples (currently six) are generated for each configuration.
+      All but the median three samples are discarded, with the remaining samples
+      averaged to produce a single number which is reported as the benchmark result.
+    </p>
+<p>
+      The input files, available in the bench/data directory, are laid out thusly:
+    </p>
+<div class="table">
+<a name="json.benchmarks.input_files"></a><p class="title"><b>Table&#160;7.&#160;Input Files</b></p>
+<div class="table-contents"><table class="table" summary="Input Files">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Name
+              </p>
+            </th>
+<th>
+              <p>
+                Size
+              </p>
+            </th>
+<th>
+              <p>
+                Description
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>array.json</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                667KB
+              </p>
+            </td>
+<td>
+              <p>
+                A single array with random values and words.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>canada.json</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                2.14MB
+              </p>
+            </td>
+<td>
+              <p>
+                The largest file, containing a huge number of 2-element arrays holding
+                floating-point coordinate pairs.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>citm_catalog</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                1.69MB
+              </p>
+            </td>
+<td>
+              <p>
+                A large JSON with a variety of nesting, types, and lengths.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>random.json</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                2,244 bytes
+              </p>
+            </td>
+<td>
+              <p>
+                Holds a randomly generated JSON with assorted types.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>small.json</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                603 bytes
+              </p>
+            </td>
+<td>
+              <p>
+                Containing a few nested objects with strings.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>strings.json</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                992KB
+              </p>
+            </td>
+<td>
+              <p>
+                Contains a single array with random long strings.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <span class="bold"><strong>twitter.json</strong></span>
+              </p>
+            </td>
+<td>
+              <p>
+                631KB
+              </p>
+            </td>
+<td>
+              <p>
+                An export of data from Twitter's API.
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+      Hardware used for testing: <span class="bold"><strong>Intel(R) Core(TM) i7-6950X
+      CPU @ 3.00GHz</strong></span>, Windows 10, 64GB RAM.
+    </p>
+<p>
+      Thanks to SSE2 optimized string processing algorithms from Peter Dimov, Boost.JSON
+      significantly outperforms all other libraries for parsing and serializing unescaped
+      strings:
+    </p>
+<h4>
+<a name="json.benchmarks.h1"></a>
+      <span class="phrase"><a name="json.benchmarks.parse_strings_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.parse_strings_json">Parse
+      strings.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/parse-strings.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h2"></a>
+      <span class="phrase"><a name="json.benchmarks.serialize_strings_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.serialize_strings_json">Serialize
+      strings.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/serialize-strings.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h3"></a>
+      <span class="phrase"><a name="json.benchmarks.parse_small_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.parse_small_json">Parse
+      small.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/parse-small.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h4"></a>
+      <span class="phrase"><a name="json.benchmarks.serialize_small_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.serialize_small_json">Serialize
+      small.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/serialize-small.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h5"></a>
+      <span class="phrase"><a name="json.benchmarks.parse_array_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.parse_array_json">Parse
+      array.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/parse-array.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h6"></a>
+      <span class="phrase"><a name="json.benchmarks.serialize_array_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.serialize_array_json">Serialize
+      array.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/serialize-array.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h7"></a>
+      <span class="phrase"><a name="json.benchmarks.parse_random_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.parse_random_json">Parse
+      random.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/parse-random.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h8"></a>
+      <span class="phrase"><a name="json.benchmarks.serialize_random_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.serialize_random_json">Serialize
+      random.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/serialize-random.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h9"></a>
+      <span class="phrase"><a name="json.benchmarks.parse_twitter_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.parse_twitter_json">Parse
+      twitter.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/parse-twitter.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h10"></a>
+      <span class="phrase"><a name="json.benchmarks.serialize_twitter_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.serialize_twitter_json">Serialize
+      twitter.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/serialize-twitter.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h11"></a>
+      <span class="phrase"><a name="json.benchmarks.parse_citm_catalog_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.parse_citm_catalog_json">Parse
+      citm_catalog.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/parse-citm-catalog.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h12"></a>
+      <span class="phrase"><a name="json.benchmarks.serialize_citm_catalog_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.serialize_citm_catalog_json">Serialize
+      citm_catalog.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/serialize-citm-catalog.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h13"></a>
+      <span class="phrase"><a name="json.benchmarks.parse_canada_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.parse_canada_json">Parse
+      canada.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/parse-canada.png" width="668"></span>
+    </p>
+<h4>
+<a name="json.benchmarks.h14"></a>
+      <span class="phrase"><a name="json.benchmarks.serialize_canada_json"></a></span><a class="link" href="benchmarks.html#json.benchmarks.serialize_canada_json">Serialize
+      canada.json</a>
+    </h4>
+<p>
+      <span class="inlinemediaobject"><img src="images/serialize-canada.png" width="668"></span>
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="comparison.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="ref.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>value_cast_traits</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../ref.html" title="Reference">
+<link rel="prev" href="boost__json__value/at/overload2.html" title="value::at (2 of 2 overloads)">
+<link rel="next" href="boost__pilfer.html" title="boost::pilfer">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__value/at/overload2.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__pilfer.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.ref.boost__json__value_cast_traits"></a><a class="link" href="boost__json__value_cast_traits.html" title="value_cast_traits">value_cast_traits</a>
+</h3></div></div></div>
+<p>
+        Customization point to construct a user-defined type for a JSON value.
+      </p>
+<h5>
+<a name="json.ref.boost__json__value_cast_traits.h0"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast_traits.synopsis"></a></span><a class="link" href="boost__json__value_cast_traits.html#json.ref.boost__json__value_cast_traits.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json/traits.hpp" target="_top">boost/json/traits.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
+    <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">value_cast_traits</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__value_cast_traits.h1"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast_traits.description"></a></span><a class="link" href="boost__json__value_cast_traits.html#json.ref.boost__json__value_cast_traits.description">Description</a>
+      </h5>
+<p>
+        This class template is used by the implementation as needed to construct
+        a user-defined type T from a <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>. The customization point is
+        used by declaring a specialization for the type <code class="computeroutput"><span class="identifier">T</span></code>
+        and providing a public static member function with this signature:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">assign</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">t</span> <span class="special">)</span>
+</pre>
+<p>
+        The specialization must be in the same namespace as the library.
+      </p>
+<h5>
+<a name="json.ref.boost__json__value_cast_traits.h2"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast_traits.example"></a></span><a class="link" href="boost__json__value_cast_traits.html#json.ref.boost__json__value_cast_traits.example">Example</a>
+      </h5>
+<p>
+        This example declares a struct T and specializes the trait to provide a means
+        of construction:
+      </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">T</span>
+<span class="special">{</span>
+    <span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
+    <span class="keyword">bool</span> <span class="identifier">b</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="comment">// Specialization of to_value_traits must be in the</span>
+<span class="comment">// same namespace of the library in order to compile.</span>
+
+<span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+<span class="keyword">namespace</span> <span class="identifier">json</span> <span class="special">{</span>
+<span class="keyword">template</span><span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">to_value_traits</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">assign</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;</span> <span class="identifier">jv</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">t</span> <span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span> <span class="identifier">t</span><span class="special">.</span><span class="identifier">i</span><span class="special">,</span> <span class="identifier">t</span><span class="special">.</span><span class="identifier">b</span> <span class="special">};</span>
+    <span class="special">}</span>
+<span class="special">};</span>
+<span class="special">}</span> <span class="comment">// namespace json</span>
+<span class="special">}</span> <span class="comment">// naemspace boost</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__value_cast_traits.h3"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast_traits.remarks"></a></span><a class="link" href="boost__json__value_cast_traits.html#json.ref.boost__json__value_cast_traits.remarks">Remarks</a>
+      </h5>
+<p>
+        Specializations of the <code class="computeroutput"><span class="identifier">value_cast_traits</span></code>
+        template should never be invoked directly. Callers should instead use the
+        <a class="link" href="boost__json__value_cast.html" title="value_cast"><code class="computeroutput"><span class="identifier">value_cast</span></code></a>
+        function, even when implementing customization points.
+      </p>
+<h5>
+<a name="json.ref.boost__json__value_cast_traits.h4"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast_traits.template_parameters"></a></span><a class="link" href="boost__json__value_cast_traits.html#json.ref.boost__json__value_cast_traits.template_parameters">Template
+        Parameters</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Type
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">T</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The type for which the conversion should be customized.
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
+<h5>
+<a name="json.ref.boost__json__value_cast_traits.h5"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast_traits.see_also"></a></span><a class="link" href="boost__json__value_cast_traits.html#json.ref.boost__json__value_cast_traits.see_also">See
+        Also</a>
+      </h5>
+<p>
+        <a class="link" href="boost__json__to_value.html" title="to_value"><code class="computeroutput"><span class="identifier">to_value</span></code></a>,
+        <a class="link" href="boost__json__to_value_traits.html" title="to_value_traits"><code class="computeroutput"><span class="identifier">to_value_traits</span></code></a>,
+        <a class="link" href="boost__json__value_cast.html" title="value_cast"><code class="computeroutput"><span class="identifier">value_cast</span></code></a>
+      </p>
+<p>
+        Convenience header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json.hpp" target="_top">boost/json.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__value/at/overload2.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__pilfer.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

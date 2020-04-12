@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>basic_parser::on_string_part</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Boost.JSON">
+<link rel="up" href="../boost__json__basic_parser.html" title="basic_parser">
+<link rel="prev" href="on_key.html" title="basic_parser::on_key">
+<link rel="next" href="on_string.html" title="basic_parser::on_string">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="on_key.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost__json__basic_parser.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="on_string.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="json.ref.boost__json__basic_parser.on_string_part"></a><a class="link" href="on_string_part.html" title="basic_parser::on_string_part">basic_parser::on_string_part</a>
+</h4></div></div></div>
+<p>
+          <a class="indexterm" name="idm1547843824"></a>
+        </p>
+<p>
+          Called with characters corresponding to part of the current string.
+        </p>
+<h6>
+<a name="json.ref.boost__json__basic_parser.on_string_part.h0"></a>
+          <span class="phrase"><a name="json.ref.boost__json__basic_parser.on_string_part.synopsis"></a></span><a class="link" href="on_string_part.html#json.ref.boost__json__basic_parser.on_string_part.synopsis">Synopsis</a>
+        </h6>
+<pre class="programlisting"><span class="keyword">void</span>
+<span class="identifier">on_string_part</span><span class="special">(</span>
+    <span class="identifier">string_view</span> <span class="identifier">s</span><span class="special">,</span>
+    <span class="identifier">error_code</span><span class="special">&amp;</span> <span class="identifier">ec</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="json.ref.boost__json__basic_parser.on_string_part.h1"></a>
+          <span class="phrase"><a name="json.ref.boost__json__basic_parser.on_string_part.description"></a></span><a class="link" href="on_string_part.html#json.ref.boost__json__basic_parser.on_string_part.description">Description</a>
+        </h6>
+<p>
+          This function is called during parsing to provide the characters corresponding
+          to a string value being parsed. More string data may be provided by zero
+          or more calls to <a class="link" href="on_string_part.html" title="basic_parser::on_string_part"><code class="computeroutput"><span class="identifier">on_string_part</span></code></a>, followed by a
+          final call to <a class="link" href="on_string.html" title="basic_parser::on_string"><code class="computeroutput"><span class="identifier">on_string</span></code></a>.
+        </p>
+<h6>
+<a name="json.ref.boost__json__basic_parser.on_string_part.h2"></a>
+          <span class="phrase"><a name="json.ref.boost__json__basic_parser.on_string_part.parameters"></a></span><a class="link" href="on_string_part.html#json.ref.boost__json__basic_parser.on_string_part.parameters">Parameters</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Name
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">s</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The string view holding the next buffer of string data, with
+                    escapes converted to their actual characters.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ec</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The error, if any, which will be returned by the current invocation
+                    of <a class="link" href="write_some/overload1.html" title="basic_parser::write_some (1 of 2 overloads)"><code class="computeroutput"><span class="identifier">write_some</span></code></a>, <a class="link" href="write/overload1.html" title="basic_parser::write (1 of 2 overloads)"><code class="computeroutput"><span class="identifier">write</span></code></a>, or <a class="link" href="finish/overload1.html" title="basic_parser::finish (1 of 4 overloads)"><code class="computeroutput"><span class="identifier">finish</span></code></a>.
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="on_key.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost__json__basic_parser.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="on_string.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

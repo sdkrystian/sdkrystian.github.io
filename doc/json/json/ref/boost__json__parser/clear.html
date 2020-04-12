@@ -1,0 +1,65 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>parser::clear</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Boost.JSON">
+<link rel="up" href="../boost__json__parser.html" title="parser">
+<link rel="prev" href="start.html" title="parser::start">
+<link rel="next" href="release.html" title="parser::release">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="start.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost__json__parser.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="release.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="json.ref.boost__json__parser.clear"></a><a class="link" href="clear.html" title="parser::clear">parser::clear</a>
+</h4></div></div></div>
+<p>
+          <a class="indexterm" name="idm1543518064"></a>
+        </p>
+<p>
+          Discard all parsed JSON results.
+        </p>
+<h6>
+<a name="json.ref.boost__json__parser.clear.h0"></a>
+          <span class="phrase"><a name="json.ref.boost__json__parser.clear.synopsis"></a></span><a class="link" href="clear.html#json.ref.boost__json__parser.clear.synopsis">Synopsis</a>
+        </h6>
+<pre class="programlisting"><span class="keyword">void</span>
+<span class="identifier">clear</span><span class="special">();</span>
+</pre>
+<h6>
+<a name="json.ref.boost__json__parser.clear.h1"></a>
+          <span class="phrase"><a name="json.ref.boost__json__parser.clear.description"></a></span><a class="link" href="clear.html#json.ref.boost__json__parser.clear.description">Description</a>
+        </h6>
+<p>
+          This function destroys all intermediate parsing results, while preserving
+          dynamically allocated internal memory which may be reused on a subsequent
+          parse.
+        </p>
+<h6>
+<a name="json.ref.boost__json__parser.clear.h2"></a>
+          <span class="phrase"><a name="json.ref.boost__json__parser.clear.remarks"></a></span><a class="link" href="clear.html#json.ref.boost__json__parser.clear.remarks">Remarks</a>
+        </h6>
+<p>
+          After this call, it is necessary to call <a class="link" href="start.html" title="parser::start"><code class="computeroutput"><span class="identifier">start</span></code></a> to parse a new JSON incrementally.
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="start.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost__json__parser.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="release.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

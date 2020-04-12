@@ -1,0 +1,297 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Value Conversion</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../usage.html" title="Usage">
+<link rel="prev" href="serializing.html" title="Serializing">
+<link rel="next" href="initializer_lists.html" title="Initializer Lists">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="serializing.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../usage.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="initializer_lists.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.usage.conversion"></a><a class="link" href="conversion.html" title="Value Conversion">Value Conversion</a>
+</h3></div></div></div>
+<p>
+        While the <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>
+        container makes it easy to create ad-hoc structures, often it is necessary
+        to convert between JSON and specific user-defined types. The library provides
+        a set of customization points to enable conversions between objects of type
+        <code class="computeroutput"><span class="identifier">T</span></code> and a JSON value by:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            A specialization of <a class="link" href="../ref/boost__json__to_value_traits.html" title="to_value_traits"><code class="computeroutput"><span class="identifier">to_value_traits</span></code></a> for <code class="computeroutput"><span class="identifier">T</span></code> containing the public static member
+            function <code class="computeroutput"><span class="keyword">void</span> <span class="identifier">to_json_traits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">assign</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;,</span> <span class="identifier">T</span>
+            <span class="keyword">const</span><span class="special">&amp;</span>
+            <span class="special">)</span></code>,
+          </li>
+<li class="listitem">
+            A specialization of <a class="link" href="../ref/boost__json__value_cast_traits.html" title="value_cast_traits"><code class="computeroutput"><span class="identifier">value_cast_traits</span></code></a> for <code class="computeroutput"><span class="identifier">T</span></code> containing the public static member
+            function <code class="computeroutput"><span class="identifier">T</span> <span class="identifier">value_cast_traits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">construct</span><span class="special">(</span> <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="special">)</span></code>,
+          </li>
+<li class="listitem">
+            A public non-static member function <code class="computeroutput"><span class="keyword">void</span>
+            <span class="identifier">T</span><span class="special">::</span><span class="identifier">to_json</span><span class="special">(</span>
+            <span class="identifier">value</span><span class="special">&amp;</span>
+            <span class="special">)</span> <span class="keyword">const</span></code>,
+          </li>
+<li class="listitem">
+            A public constructor <code class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">T</span><span class="special">(</span> <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="special">)</span></code>,
+          </li>
+</ul></div>
+<p>
+        The library provides built-in support for converting between a <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a> and the type <code class="computeroutput"><span class="identifier">T</span></code> when:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">is_constructible</span><span class="special">&lt;</span>
+            <span class="identifier">value</span><span class="special">,</span>
+            <span class="identifier">T</span><span class="special">,</span>
+            <span class="identifier">storage_ptr</span> <span class="special">&gt;::</span><span class="identifier">value</span> <span class="special">==</span>
+            <span class="keyword">true</span></code>, or
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">T</span></code> is a container meeting
+            a built-in list of supported generic requirements.
+          </li>
+</ul></div>
+<p>
+        When more than one conversion is available for a given type, one will be
+        chosen according to a defined set of priorities.
+      </p>
+<h5>
+<a name="json.usage.conversion.h0"></a>
+        <span class="phrase"><a name="json.usage.conversion.member_functions"></a></span><a class="link" href="conversion.html#json.usage.conversion.member_functions">Member
+        Functions</a>
+      </h5>
+<p>
+        The example code that follows uses the user-defined type <code class="computeroutput"><span class="identifier">customer</span></code>,
+        declared thusly:
+      </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">customer</span>
+<span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">id</span><span class="special">;</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">name</span><span class="special">;</span>
+    <span class="keyword">bool</span> <span class="identifier">delinquent</span><span class="special">;</span>
+
+    <span class="identifier">customer</span><span class="special">()</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span>
+
+    <span class="keyword">explicit</span> <span class="identifier">customer</span><span class="special">(</span> <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="special">);</span>
+
+    <span class="keyword">void</span> <span class="identifier">to_json</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;</span> <span class="identifier">jv</span> <span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+<p>
+        Since the author has control of the type, it uses member functions to enable
+        conversions with JSON. An implementation of <code class="computeroutput"><span class="identifier">to_json</span></code>
+        may look like this:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">customer</span><span class="special">::</span><span class="identifier">to_json</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;</span> <span class="identifier">jv</span> <span class="special">)</span> <span class="keyword">const</span>
+<span class="special">{</span>
+    <span class="comment">// Assign a JSON value</span>
+    <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span>
+        <span class="special">{</span> <span class="string">"id"</span><span class="special">,</span> <span class="identifier">id</span> <span class="special">},</span>
+        <span class="special">{</span> <span class="string">"name"</span><span class="special">,</span> <span class="identifier">name</span> <span class="special">},</span>
+        <span class="special">{</span> <span class="string">"delinquent"</span><span class="special">,</span> <span class="identifier">delinquent</span> <span class="special">}</span>
+    <span class="special">};</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Turning a JSON value back into a customer is a bit more complicated, as it
+        must handle the case where the value does not have the necessary keys, or
+        if the values have the wrong kind. The implementation of <code class="computeroutput"><span class="identifier">from_json</span></code>
+        throws an exception when the JSON value does not precisely match the expected
+        schema for customer:
+      </p>
+<pre class="programlisting"><span class="identifier">customer</span><span class="special">::</span><span class="identifier">customer</span><span class="special">(</span> <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">jv</span> <span class="special">)</span>
+
+    <span class="comment">// at() throws if `jv` is not an object, or if the key is not found.</span>
+    <span class="comment">//</span>
+    <span class="comment">// as_uint64() will throw if the value is not an unsigned 64-bit integer.</span>
+
+    <span class="special">:</span> <span class="identifier">id</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">at</span><span class="special">(</span> <span class="string">"id"</span> <span class="special">).</span><span class="identifier">as_uint64</span><span class="special">()</span> <span class="special">)</span>
+
+    <span class="comment">// We already know that jv is an object from</span>
+    <span class="comment">// the previous call to jv.as_object() suceeding,</span>
+    <span class="comment">// now we use jv.get_object() which skips the</span>
+    <span class="comment">// check.</span>
+    <span class="comment">//</span>
+    <span class="comment">// value_cast will throw if jv.kind() != kind::string</span>
+
+    <span class="special">,</span> <span class="identifier">name</span><span class="special">(</span> <span class="identifier">value_cast</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">get_object</span><span class="special">().</span><span class="identifier">at</span><span class="special">(</span> <span class="string">"name"</span> <span class="special">)</span> <span class="special">)</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// id and name are constructed from JSON in the member</span>
+    <span class="comment">// initializer list above, but we can also use regular</span>
+    <span class="comment">// assignments in the body of the function as shown below.</span>
+    <span class="comment">//</span>
+    <span class="comment">// as_bool() will throw if kv.kind() != kind::bool</span>
+
+    <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">delinquent</span> <span class="special">=</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">get_object</span><span class="special">().</span><span class="identifier">at</span><span class="special">(</span> <span class="string">"delinquent"</span> <span class="special">).</span><span class="identifier">as_bool</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+        When conversion between <code class="computeroutput"><span class="identifier">T</span></code>
+        and <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>
+        is defined in both directions, round trips are possible:
+      </p>
+<pre class="programlisting"><span class="identifier">customer</span> <span class="identifier">cust</span><span class="special">;</span>
+<span class="identifier">cust</span><span class="special">.</span><span class="identifier">id</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+<span class="identifier">cust</span><span class="special">.</span><span class="identifier">name</span> <span class="special">=</span> <span class="string">"John Doe"</span><span class="special">;</span>
+<span class="identifier">cust</span><span class="special">.</span><span class="identifier">delinquent</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
+
+<span class="comment">// Convert customer to value</span>
+<span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">to_value</span><span class="special">(</span> <span class="identifier">cust</span> <span class="special">);</span>
+
+<span class="comment">// Store value in customer</span>
+<span class="identifier">customer</span> <span class="identifier">cust2</span><span class="special">;</span>
+<span class="identifier">cust2</span> <span class="special">=</span> <span class="identifier">value_cast</span><span class="special">&lt;</span> <span class="identifier">customer</span> <span class="special">&gt;(</span> <span class="identifier">jv</span> <span class="special">);</span>
+</pre>
+<h5>
+<a name="json.usage.conversion.h1"></a>
+        <span class="phrase"><a name="json.usage.conversion.trait_specialization"></a></span><a class="link" href="conversion.html#json.usage.conversion.trait_specialization">Trait
+        Specialization</a>
+      </h5>
+<p>
+        Sometimes it is desired to perform JSON conversion, but the type in question
+        cannot be modified. This can happen for <code class="computeroutput"><span class="identifier">std</span></code>
+        types, or for types from other libraries. Or, because the user wants to make
+        keep the convertibility to and from JSON private and thus forgo adding a
+        public member function. For these cases, it is possible to specialize the
+        library class templates <a class="link" href="../ref/boost__json__to_value_traits.html" title="to_value_traits"><code class="computeroutput"><span class="identifier">to_value_traits</span></code></a> and <a class="link" href="../ref/boost__json__value_cast_traits.html" title="value_cast_traits"><code class="computeroutput"><span class="identifier">value_cast_traits</span></code></a> for the type and
+        provide the necessary conversion functions. Here we enable conversion in
+        both directions for the type <a href="https://en.cppreference.com/w/cpp/numeric/complex" target="_top"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code></a>:
+      </p>
+<pre class="programlisting"><span class="comment">// Specializations of to_value_traits and value_cast_traits</span>
+<span class="comment">// must be declared in the boost::json namespace.</span>
+
+<span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+<span class="keyword">namespace</span> <span class="identifier">json</span> <span class="special">{</span>
+
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">to_value_traits</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">assign</span><span class="special">(</span> <span class="identifier">value</span><span class="special">&amp;</span> <span class="identifier">jv</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">t</span> <span class="special">);</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">value_cast_traits</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="identifier">construct</span><span class="special">(</span> <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">jv</span> <span class="special">);</span>
+<span class="special">};</span>
+
+<span class="special">}</span> <span class="comment">// namespace json</span>
+<span class="special">}</span> <span class="comment">// namespace boost</span>
+</pre>
+<p>
+        The implementation for <code class="computeroutput"><span class="identifier">to_json</span></code>
+        is straightforward:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">T</span> <span class="special">&gt;</span>
+<span class="keyword">void</span>
+<span class="identifier">to_value_traits</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;::</span>
+<span class="identifier">assign</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">json</span><span class="special">::</span><span class="identifier">value</span><span class="special">&amp;</span> <span class="identifier">jv</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">t</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// Store a complex number as a 2-element array</span>
+    <span class="identifier">array</span><span class="special">&amp;</span> <span class="identifier">a</span> <span class="special">=</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">emplace_array</span><span class="special">();</span>
+
+    <span class="comment">// Real part first</span>
+    <span class="identifier">a</span><span class="special">.</span><span class="identifier">emplace_back</span><span class="special">(</span> <span class="identifier">t</span><span class="special">.</span><span class="identifier">real</span><span class="special">()</span> <span class="special">);</span>
+
+    <span class="comment">// Imaginary part last</span>
+    <span class="identifier">a</span><span class="special">.</span><span class="identifier">emplace_back</span><span class="special">(</span> <span class="identifier">t</span><span class="special">.</span><span class="identifier">imag</span><span class="special">()</span> <span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        As before, the implementation for <code class="computeroutput"><span class="identifier">from_json</span></code>
+        must use exceptions to indicate that the value does not have the right schema:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">T</span> <span class="special">&gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span>
+<span class="identifier">value_cast_traits</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;::</span>
+<span class="identifier">construct</span><span class="special">(</span> <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">jv</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// as_array() throws if jv.kind() != kind::array.</span>
+
+    <span class="identifier">array</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">a</span> <span class="special">=</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">as_array</span><span class="special">();</span>
+
+    <span class="comment">// We store the complex number as a two element</span>
+    <span class="comment">// array with the real part first, and the imaginary</span>
+    <span class="comment">// part last.</span>
+    <span class="comment">//</span>
+    <span class="comment">// value_cast() throws if the JSON value does</span>
+    <span class="comment">// not contain an applicable kind for the type T.</span>
+
+    <span class="keyword">if</span><span class="special">(</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span> <span class="special">!=</span> <span class="number">2</span><span class="special">)</span>
+        <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">invalid_argument</span><span class="special">(</span>
+            <span class="string">"invalid json for std::complex"</span><span class="special">);</span>
+    <span class="keyword">return</span> <span class="special">{</span>
+        <span class="identifier">value_cast</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;(</span> <span class="identifier">a</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">),</span>
+        <span class="identifier">value_cast</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;(</span> <span class="identifier">a</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">)</span> <span class="special">};</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Conversion to and from <a href="https://en.cppreference.com/w/cpp/numeric/complex" target="_top"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code></a>
+        is now possible:
+      </p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">&gt;</span> <span class="identifier">c</span> <span class="special">=</span> <span class="special">{</span> <span class="number">3.14159</span><span class="special">,</span> <span class="number">2.71828</span> <span class="special">};</span>
+
+<span class="comment">// Convert std::complex&lt; double &gt; to value</span>
+<span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">to_value</span><span class="special">(</span><span class="identifier">c</span><span class="special">);</span>
+
+<span class="comment">// Store value in std::complex&lt; double &gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">&gt;</span> <span class="identifier">c2</span><span class="special">;</span>
+
+<span class="identifier">c2</span> <span class="special">=</span> <span class="identifier">value_cast</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">&gt;</span> <span class="special">&gt;(</span> <span class="identifier">jv</span> <span class="special">);</span>
+</pre>
+<p>
+        Since the specializations of <a class="link" href="../ref/boost__json__to_value_traits.html" title="to_value_traits"><code class="computeroutput"><span class="identifier">to_value_traits</span></code></a> and <a class="link" href="../ref/boost__json__value_cast_traits.html" title="value_cast_traits"><code class="computeroutput"><span class="identifier">value_cast_traits</span></code></a> are class templates
+        themselves, conversion to complex numbers using different floating point
+        representations are also possible:
+      </p>
+<pre class="programlisting"><span class="comment">// Use float instead of double.</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">float</span> <span class="special">&gt;</span> <span class="identifier">c</span> <span class="special">=</span> <span class="special">{</span> <span class="special">-</span><span class="number">42.f</span><span class="special">,</span> <span class="number">1.41421f</span> <span class="special">};</span>
+
+<span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="identifier">to_value</span><span class="special">(</span><span class="identifier">c</span><span class="special">);</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">float</span> <span class="special">&gt;</span> <span class="identifier">c2</span><span class="special">;</span>
+
+<span class="identifier">c2</span> <span class="special">=</span> <span class="identifier">value_cast</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">float</span> <span class="special">&gt;</span> <span class="special">&gt;(</span> <span class="identifier">jv</span> <span class="special">);</span>
+</pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Users should not directly invoke any <code class="computeroutput"><span class="identifier">to_json</span></code>
+          member functions or the library class templates <a class="link" href="../ref/boost__json__to_value_traits.html" title="to_value_traits"><code class="computeroutput"><span class="identifier">to_value_traits</span></code></a> and <a class="link" href="../ref/boost__json__value_cast_traits.html" title="value_cast_traits"><code class="computeroutput"><span class="identifier">value_cast_traits</span></code></a>, otherwise the
+          behavior may be undefined. Instead, callers should always use the functions
+          <a class="link" href="../ref/boost__json__to_value.html" title="to_value"><code class="computeroutput"><span class="identifier">to_value</span></code></a>
+          and <a class="link" href="../ref/boost__json__value_cast.html" title="value_cast"><code class="computeroutput"><span class="identifier">value_cast</span></code></a>,
+          even in their implementation of the customization points for desired types.
+        </p></td></tr>
+</table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="serializing.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../usage.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="initializer_lists.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

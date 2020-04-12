@@ -1,0 +1,105 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>to_string</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../ref.html" title="Reference">
+<link rel="prev" href="boost__json__parse/overload2.html" title="parse (2 of 2 overloads)">
+<link rel="next" href="boost__json__operator_lt__lt_.html" title="operator&lt;&lt;">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__parse/overload2.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__operator_lt__lt_.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.ref.boost__json__to_string"></a><a class="link" href="boost__json__to_string.html" title="to_string">to_string</a>
+</h3></div></div></div>
+<p>
+        <a class="indexterm" name="idm1528533488"></a>
+      </p>
+<p>
+        Return a string representing a serialized <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>.
+      </p>
+<h5>
+<a name="json.ref.boost__json__to_string.h0"></a>
+        <span class="phrase"><a name="json.ref.boost__json__to_string.synopsis"></a></span><a class="link" href="boost__json__to_string.html#json.ref.boost__json__to_string.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json/serializer.hpp" target="_top">boost/json/serializer.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="identifier">string</span>
+<span class="identifier">to_string</span><span class="special">(</span>
+    <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">jv</span><span class="special">);</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__to_string.h1"></a>
+        <span class="phrase"><a name="json.ref.boost__json__to_string.description"></a></span><a class="link" href="boost__json__to_string.html#json.ref.boost__json__to_string.description">Description</a>
+      </h5>
+<p>
+        This function serializes the specified value and returns it as a <a class="link" href="boost__json__string.html" title="string"><code class="computeroutput"><span class="identifier">string</span></code></a>.
+      </p>
+<h5>
+<a name="json.ref.boost__json__to_string.h2"></a>
+        <span class="phrase"><a name="json.ref.boost__json__to_string.exception_safety"></a></span><a class="link" href="boost__json__to_string.html#json.ref.boost__json__to_string.exception_safety">Exception
+        Safety</a>
+      </h5>
+<p>
+        Strong guarantee. Calls to <a class="link" href="boost__json__storage/allocate.html" title="storage::allocate"><code class="computeroutput"><span class="identifier">storage</span><span class="special">::</span><span class="identifier">allocate</span></code></a> may throw.
+      </p>
+<h5>
+<a name="json.ref.boost__json__to_string.h3"></a>
+        <span class="phrase"><a name="json.ref.boost__json__to_string.parameters"></a></span><a class="link" href="boost__json__to_string.html#json.ref.boost__json__to_string.parameters">Parameters</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">jv</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The value to serialize.
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
+<p>
+        Convenience header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json.hpp" target="_top">boost/json.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__parse/overload2.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="boost__json__operator_lt__lt_.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

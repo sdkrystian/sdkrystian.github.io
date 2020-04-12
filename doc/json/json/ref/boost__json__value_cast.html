@@ -1,0 +1,187 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>value_cast</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Boost.JSON">
+<link rel="up" href="../ref.html" title="Reference">
+<link rel="prev" href="boost__json__to_value.html" title="to_value">
+<link rel="next" href="../index.html" title="Index">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost.JSON Logo" width="880" height="80" src="../../images/doc-logo.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__to_value.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../index.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="json.ref.boost__json__value_cast"></a><a class="link" href="boost__json__value_cast.html" title="value_cast">value_cast</a>
+</h3></div></div></div>
+<p>
+        <a class="indexterm" name="idm1527826784"></a>
+      </p>
+<p>
+        Convert a JSON value to another type T.
+      </p>
+<h5>
+<a name="json.ref.boost__json__value_cast.h0"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.synopsis"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json/value_cast.hpp" target="_top">boost/json/value_cast.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
+    <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">auto</span>
+<span class="identifier">value_cast</span><span class="special">(</span>
+    <span class="identifier">value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">jv</span><span class="special">);</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__value_cast.h1"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.description"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.description">Description</a>
+      </h5>
+<p>
+        This function attempts to convert the <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a> to the given type <code class="computeroutput"><span class="identifier">T</span></code>. It handles these cases, in order of
+        decreasing priority:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            If <a class="link" href="boost__json__value_cast_traits.html" title="value_cast_traits"><code class="computeroutput"><span class="identifier">value_cast_traits</span></code></a> contains a
+            specialization for <code class="computeroutput"><span class="identifier">T</span></code>,
+            then the function returns <code class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">from_json</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span></code>.
+          </li>
+<li class="listitem">
+            If <code class="computeroutput"><span class="identifier">T</span></code> is numeric, the
+            function returns <code class="computeroutput"><span class="identifier">number_cast</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">jv</span><span class="special">)</span></code>.
+          </li>
+<li class="listitem">
+            If <code class="computeroutput"><span class="identifier">T</span></code> is any of the other
+            types that are directly represented in a <a class="link" href="boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a> (<a class="link" href="boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>, <a class="link" href="boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>, <a class="link" href="boost__json__string.html" title="string"><code class="computeroutput"><span class="identifier">string</span></code></a>, or <code class="computeroutput"><span class="keyword">bool</span></code>),
+            and the kind of value is suitable then a <code class="computeroutput"><span class="identifier">T</span>
+            <span class="keyword">const</span><span class="special">&amp;</span></code>
+            is returned. If the kind is not suitable then an exception is thrown.
+          </li>
+<li class="listitem">
+            Otherwise, if <code class="computeroutput"><span class="identifier">T</span></code> matches
+            a generic container known to the implementation it is converted.
+          </li>
+</ul></div>
+<h5>
+<a name="json.ref.boost__json__value_cast.h2"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.constraints"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.constraints">Constraints</a>
+      </h5>
+<pre class="programlisting"><span class="identifier">has_value_cast</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;::</span><span class="identifier">value</span>
+</pre>
+<h5>
+<a name="json.ref.boost__json__value_cast.h3"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.exception_safety"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.exception_safety">Exception
+        Safety</a>
+      </h5>
+<p>
+        Strong guarantee.
+      </p>
+<h5>
+<a name="json.ref.boost__json__value_cast.h4"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.parameters"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.parameters">Parameters</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">jv</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The JSON value to convert.
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
+<h5>
+<a name="json.ref.boost__json__value_cast.h5"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.template_parameters"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.template_parameters">Template Parameters</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Type
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">T</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The type to convert to.
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
+<h5>
+<a name="json.ref.boost__json__value_cast.h6"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.return_value"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.return_value">Return
+        Value</a>
+      </h5>
+<p>
+        The result of converting <code class="computeroutput"><span class="identifier">jv</span></code>
+        to a <code class="computeroutput"><span class="identifier">T</span></code>.
+      </p>
+<h5>
+<a name="json.ref.boost__json__value_cast.h7"></a>
+        <span class="phrase"><a name="json.ref.boost__json__value_cast.see_also"></a></span><a class="link" href="boost__json__value_cast.html#json.ref.boost__json__value_cast.see_also">See
+        Also</a>
+      </h5>
+<p>
+        <a class="link" href="boost__json__to_value.html" title="to_value"><code class="computeroutput"><span class="identifier">to_value</span></code></a>
+      </p>
+<p>
+        Convenience header <code class="literal">&lt;<a href="https://github.com/vinniefalco/json/blob/master/include/boost/json.hpp" target="_top">boost/json.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2019 Vinnie Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__json__to_value.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../index.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
