@@ -59,7 +59,7 @@
 </pre>
 <p>
         When a two element initializer list is nested within an enclosing initializer
-        list, it is unclear whether it represents an <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a> or an object:
+        list, it is unclear whether it represents an <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a> or an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>:
       </p>
 <pre class="programlisting"><span class="comment">// Should this be an array or an object?</span>
 <span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"hello"</span><span class="special">,</span> <span class="number">42</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"world"</span><span class="special">,</span> <span class="number">43</span> <span class="special">}</span> <span class="special">};</span>
