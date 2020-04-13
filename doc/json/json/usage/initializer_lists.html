@@ -20,17 +20,19 @@
 <a name="json.usage.initializer_lists"></a><a class="link" href="initializer_lists.html" title="Initializer Lists">Initializer Lists</a>
 </h3></div></div></div>
 <p>
-        A <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>
-        can be represented in code with C++ initializer lists:
+        Initializer lists can be used to construct or assign objects of type <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>,
+        <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>,
+        and <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>:
       </p>
 <pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span>
 <span class="special">{</span>
     <span class="special">{</span> <span class="string">"name"</span><span class="special">,</span> <span class="string">"John Doe"</span> <span class="special">},</span>
     <span class="special">{</span> <span class="string">"active"</span><span class="special">,</span> <span class="keyword">true</span> <span class="special">},</span>
+    <span class="special">{</span> <span class="string">"associated-accounts"</span><span class="special">,</span> <span class="keyword">nullptr</span> <span class="special">},</span>
     <span class="special">{</span> <span class="string">"total-balance"</span><span class="special">,</span> <span class="number">330.00</span> <span class="special">},</span>
     <span class="special">{</span>
-        <span class="string">"account-balances"</span><span class="special">,</span> <span class="special">{</span> <span class="number">84</span><span class="special">,</span> <span class="number">120</span><span class="special">,</span> <span class="number">126</span> <span class="special">}</span>
-    <span class="special">}</span>
+         <span class="string">"account-balances"</span><span class="special">,</span> <span class="special">{</span> <span class="number">84</span><span class="special">,</span> <span class="number">120</span><span class="special">,</span> <span class="number">126</span> <span class="special">}</span>
+    <span class="special">},</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -56,17 +58,16 @@
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">as_array</span><span class="special">().</span><span class="identifier">back</span><span class="special">().</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
 </pre>
 <p>
-        An ambiguity arises when a two element initializer list is nested within
-        an enclosing initializer list:
+        When a two element initializer list is nested within an enclosing initializer
+        list, it is unclear whether it represents an <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a> or an object:
       </p>
-<pre class="programlisting"><span class="comment">// Should this be an array, or an object?</span>
+<pre class="programlisting"><span class="comment">// Should this be an array or an object?</span>
 <span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"hello"</span><span class="special">,</span> <span class="number">42</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"world"</span><span class="special">,</span> <span class="number">43</span> <span class="special">}</span> <span class="special">};</span>
 </pre>
 <p>
-        When such an ambiguity occurs, if every element consists of a string followed
-        by a single value, then the enclosing initializer list is interpreted as
-        an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>.
-        Otherwise, it is interpreted as an <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>.
+        In such cases, if every element consists of a string followed by a single
+        value, then the enclosing initializer list is interpreted as an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>. Otherwise, it is interpreted
+        as an <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>.
       </p>
 <pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv1</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"hello"</span><span class="special">,</span> <span class="number">42</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"world"</span><span class="special">,</span> <span class="number">43</span> <span class="special">}</span> <span class="special">};</span>
 
