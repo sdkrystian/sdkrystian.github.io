@@ -116,13 +116,11 @@
         Similarly, an initializer list for an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a> is always interpreted as
         an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>.
         In such cases, the initializer list must be a list of key-value pairs. For
-        example, the following code will not compile:
+        example, the following code will not compile because <code class="computeroutput"><span class="number">1</span></code>
+        is not convertible to a string:
       </p>
-<pre class="programlisting"><span class="identifier">object</span> <span class="identifier">jo</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="number">0</span><span class="special">,</span> <span class="number">0.39</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"venus"</span><span class="special">,</span> <span class="number">0.72</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"earth"</span><span class="special">,</span> <span class="number">1</span> <span class="special">}</span> <span class="special">};</span>
+<pre class="programlisting"><span class="identifier">object</span> <span class="identifier">jo</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="number">1</span><span class="special">,</span> <span class="number">0.39</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"venus"</span><span class="special">,</span> <span class="number">0.72</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"earth"</span><span class="special">,</span> <span class="number">1</span> <span class="special">}</span> <span class="special">};</span>
 </pre>
-<p>
-        This is because the key for the first element is not convertible to a string.
-      </p>
 <p>
         The requirement for an initializer list to be interpreted as an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a> or <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a> when initializing such an
         entity only applies to the outermost initializer list; subsequent nested
