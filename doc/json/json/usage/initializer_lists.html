@@ -20,42 +20,37 @@
 <a name="json.usage.initializer_lists"></a><a class="link" href="initializer_lists.html" title="Initializer Lists">Initializer Lists</a>
 </h3></div></div></div>
 <p>
-        Initializer lists can be used to construct or assign objects of type <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>,
-        <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>,
-        and <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>:
+        Initializer lists can be used to construct or assign objects of type <a class="link" href="../ref/boost__json__value.html" title="value"><code class="computeroutput"><span class="identifier">value</span></code></a>:
       </p>
-<pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span>
     <span class="special">{</span> <span class="string">"name"</span><span class="special">,</span> <span class="string">"John Doe"</span> <span class="special">},</span>
     <span class="special">{</span> <span class="string">"active"</span><span class="special">,</span> <span class="keyword">true</span> <span class="special">},</span>
     <span class="special">{</span> <span class="string">"associated-accounts"</span><span class="special">,</span> <span class="keyword">nullptr</span> <span class="special">},</span>
     <span class="special">{</span> <span class="string">"total-balance"</span><span class="special">,</span> <span class="number">330.00</span> <span class="special">},</span>
-    <span class="special">{</span>
-         <span class="string">"account-balances"</span><span class="special">,</span> <span class="special">{</span> <span class="number">84</span><span class="special">,</span> <span class="number">120</span><span class="special">,</span> <span class="number">126</span> <span class="special">}</span>
-    <span class="special">},</span>
-<span class="special">};</span>
+    <span class="special">{</span> <span class="string">"account-balances"</span><span class="special">,</span> <span class="special">{</span> <span class="number">84</span><span class="special">,</span> <span class="number">120</span><span class="special">,</span> <span class="number">126</span> <span class="special">}</span> <span class="special">}</span> <span class="special">};</span>
 </pre>
 <p>
         Simple initializer lists produce an <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>:
       </p>
 <pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span> <span class="keyword">true</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="string">"hello"</span><span class="special">,</span> <span class="keyword">nullptr</span> <span class="special">};</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="string">"[true,2,\"hello\",null]"</span> <span class="special">);</span>
-
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
 
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">as_array</span><span class="special">().</span><span class="identifier">size</span><span class="special">()</span> <span class="special">==</span> <span class="number">4</span> <span class="special">);</span>
+
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="string">"[true,2,\"hello\",null]"</span> <span class="special">);</span>
 </pre>
 <p>
-        Initializer lists can be nested:
+        Initializer lists can be nested. Here we construct an array as an element
+        of an array:
       </p>
 <pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span> <span class="keyword">true</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="string">"hello"</span><span class="special">,</span> <span class="special">{</span> <span class="string">"bye"</span><span class="special">,</span> <span class="keyword">nullptr</span><span class="special">,</span> <span class="keyword">false</span> <span class="special">}</span> <span class="special">};</span>
-
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="string">"[true,2,\"hello\",[\"bye\",null,false]]"</span> <span class="special">);</span>
 
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
 
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">as_array</span><span class="special">().</span><span class="identifier">back</span><span class="special">().</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
+
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="string">"[true,2,\"hello\",[\"bye\",null,false]]"</span> <span class="special">);</span>
 </pre>
 <p>
         When a two element initializer list is nested within an enclosing initializer
@@ -71,57 +66,51 @@
       </p>
 <pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv1</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"hello"</span><span class="special">,</span> <span class="number">42</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"world"</span><span class="special">,</span> <span class="number">43</span> <span class="special">}</span> <span class="special">};</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv1</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">R</span><span class="string">"({"</span><span class="identifier">hello</span><span class="string">":42,"</span><span class="identifier">world</span><span class="string">":43})"</span> <span class="special">);</span>
-
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv1</span><span class="special">.</span><span class="identifier">is_object</span><span class="special">()</span> <span class="special">);</span>
 
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv1</span><span class="special">.</span><span class="identifier">as_object</span><span class="special">().</span><span class="identifier">size</span><span class="special">()</span> <span class="special">==</span> <span class="number">2</span> <span class="special">);</span>
+
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv1</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">R</span><span class="string">"({"</span><span class="identifier">hello</span><span class="string">":42,"</span><span class="identifier">world</span><span class="string">":43})"</span> <span class="special">);</span>
 
 <span class="comment">// All of the following are arrays</span>
 
 <span class="identifier">value</span> <span class="identifier">jv2</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"make"</span><span class="special">,</span> <span class="string">"Tesla"</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"model"</span><span class="special">,</span> <span class="number">3</span> <span class="special">},</span> <span class="string">"black"</span> <span class="special">};</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv2</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
-
 <span class="identifier">value</span> <span class="identifier">jv3</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"library"</span><span class="special">,</span> <span class="string">"JSON"</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"Boost"</span><span class="special">,</span> <span class="string">"C++"</span><span class="special">,</span> <span class="string">"Fast"</span><span class="special">,</span> <span class="string">"JSON"</span> <span class="special">}</span> <span class="special">};</span>
-
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv3</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
 
 <span class="identifier">value</span> <span class="identifier">jv4</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"color"</span><span class="special">,</span> <span class="string">"blue"</span> <span class="special">},</span> <span class="special">{</span> <span class="number">1</span><span class="special">,</span> <span class="string">"red"</span> <span class="special">}</span> <span class="special">};</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv4</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv2</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">&amp;&amp;</span> <span class="identifier">jv3</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">&amp;&amp;</span> <span class="identifier">jv4</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
 </pre>
 <p>
-        However, if the type of the element is explicitly specified, this ambiguity
-        resolution is not performed:
+        To resolve the ambiguity manually, use an explicit constructor:
       </p>
 <pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"hello"</span><span class="special">,</span> <span class="number">42</span> <span class="special">},</span> <span class="identifier">array</span><span class="special">{</span> <span class="string">"world"</span><span class="special">,</span> <span class="number">43</span> <span class="special">}</span> <span class="special">};</span>
-
-<span class="identifier">assert</span> <span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">R</span><span class="string">"([["</span><span class="identifier">hello</span><span class="string">",42],["</span><span class="identifier">world</span><span class="string">",43]])"</span> <span class="special">);</span>
 
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
 
 <span class="identifier">array</span><span class="special">&amp;</span> <span class="identifier">ja</span> <span class="special">=</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">as_array</span><span class="special">();</span>
 
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">ja</span><span class="special">[</span><span class="number">0</span><span class="special">].</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">&amp;&amp;</span> <span class="identifier">ja</span><span class="special">[</span><span class="number">1</span><span class="special">].</span><span class="identifier">is_array</span><span class="special">());</span>
+
+<span class="identifier">assert</span> <span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">R</span><span class="string">"([["</span><span class="identifier">hello</span><span class="string">",42],["</span><span class="identifier">world</span><span class="string">",43]])"</span> <span class="special">);</span>
 </pre>
 <p>
-        The interpretation of an initializer can depend upon the context in which
-        it appears. An initializer list for an <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a> is always interpreted as an
-        <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>.
+        Initializer lists can be used to unambiguously construct or assign an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a>
+        or <a class="link" href="../ref/boost__json__array.html" title="array"><code class="computeroutput"><span class="identifier">array</span></code></a>:
       </p>
 <pre class="programlisting"><span class="identifier">value</span> <span class="identifier">jv1</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"mercury"</span><span class="special">,</span> <span class="number">36</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"venus"</span><span class="special">,</span> <span class="number">67</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"earth"</span><span class="special">,</span> <span class="number">93</span> <span class="special">}</span> <span class="special">};</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv1</span><span class="special">)</span> <span class="special">==</span> <span class="string">"{\"mercury\":36,\"venus\":67,\"earth\":93}"</span> <span class="special">);</span>
-
 <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv1</span><span class="special">.</span><span class="identifier">is_object</span><span class="special">()</span> <span class="special">);</span>
+
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv1</span><span class="special">)</span> <span class="special">==</span> <span class="string">"{\"mercury\":36,\"venus\":67,\"earth\":93}"</span> <span class="special">);</span>
 
 <span class="identifier">array</span> <span class="identifier">ja</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"mercury"</span><span class="special">,</span> <span class="number">36</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"venus"</span><span class="special">,</span> <span class="number">67</span> <span class="special">},</span> <span class="special">{</span> <span class="string">"earth"</span><span class="special">,</span> <span class="number">93</span> <span class="special">}</span> <span class="special">};</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">ja</span><span class="special">)</span> <span class="special">==</span> <span class="string">"[[\"mercury\",36],[\"venus\",67],[\"earth\",93]]"</span> <span class="special">);</span>
-
 <span class="keyword">for</span> <span class="special">(</span><span class="identifier">value</span><span class="special">&amp;</span> <span class="identifier">jv2</span> <span class="special">:</span> <span class="identifier">ja</span><span class="special">)</span>
   <span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jv2</span><span class="special">.</span><span class="identifier">is_array</span><span class="special">()</span> <span class="special">);</span>
+
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">ja</span><span class="special">)</span> <span class="special">==</span> <span class="string">"[[\"mercury\",36],[\"venus\",67],[\"earth\",93]]"</span> <span class="special">);</span>
 </pre>
 <p>
         Similarly, an initializer list for an <a class="link" href="../ref/boost__json__object.html" title="object"><code class="computeroutput"><span class="identifier">object</span></code></a> is always interpreted as
@@ -152,13 +141,11 @@
 
 <span class="identifier">value</span> <span class="identifier">jv</span> <span class="special">=</span> <span class="special">{</span> <span class="special">{</span> <span class="string">"clients"</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">jo1</span><span class="special">)</span> <span class="special">}</span> <span class="special">};</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">R</span><span class="string">"({"</span><span class="identifier">clients</span><span class="string">":{"</span><span class="identifier">john</span><span class="string">":100,"</span><span class="identifier">dave</span><span class="string">":500,"</span><span class="identifier">joe</span><span class="string">":300}})"</span> <span class="special">);</span>
-
 <span class="identifier">object</span><span class="special">&amp;</span> <span class="identifier">jo2</span> <span class="special">=</span> <span class="identifier">jv</span><span class="special">.</span><span class="identifier">as_object</span><span class="special">()[</span><span class="string">"clients"</span><span class="special">].</span><span class="identifier">as_object</span><span class="special">();</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="special">!</span> <span class="identifier">jo2</span><span class="special">.</span><span class="identifier">empty</span><span class="special">()</span> <span class="special">);</span>
+<span class="identifier">assert</span><span class="special">(</span> <span class="special">!</span> <span class="identifier">jo2</span><span class="special">.</span><span class="identifier">empty</span><span class="special">()</span> <span class="special">&amp;&amp;</span> <span class="identifier">jo1</span><span class="special">.</span><span class="identifier">empty</span><span class="special">()</span> <span class="special">);</span>
 
-<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">jo1</span><span class="special">.</span><span class="identifier">empty</span><span class="special">()</span> <span class="special">);</span>
+<span class="identifier">assert</span><span class="special">(</span> <span class="identifier">to_string</span><span class="special">(</span><span class="identifier">jv</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">R</span><span class="string">"({"</span><span class="identifier">clients</span><span class="string">":{"</span><span class="identifier">john</span><span class="string">":100,"</span><span class="identifier">dave</span><span class="string">":500,"</span><span class="identifier">joe</span><span class="string">":300}})"</span> <span class="special">);</span>
 </pre>
 <div class="warning"><table border="0" summary="Warning">
 <tr>
@@ -166,9 +153,8 @@
 <th align="left">Warning</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          Do not create variables of type <a href="https://en.cppreference.com/w/cpp/utility/initializer_list" target="_top">https://en.cppreference.com/w/cpp/utility/initializer_list</a>.
-          This may result in temporaries being destroyed before the initializer list
-          is used.
+          Do not create variables of type <a href="https://en.cppreference.com/w/cpp/utility/initializer_list" target="_top"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span></code></a>. This may result
+          in temporaries being destroyed before the initializer list is used.
         </p></td></tr>
 </table></div>
 <p>
