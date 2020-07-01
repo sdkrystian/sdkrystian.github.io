@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<font face="arial"/>
+</head>
+<body>
+<h1>Boost.JSON Benchmarks</h1>
+<div id="benchmarks">
+</div>
+<br>
+<textarea id="data" cols="60" rows="20" overflow="hidden" onkeyup="autosize(this)">
+
+Parse array.json,clang x64/sse2,develop,387
+Parse array.json,clang x64/sse2,fast return (switch),383
+Parse array.json,clang x64/sse2,fast return (table),398
+Parse canada.json,clang x64/sse2,develop,527
+Parse canada.json,clang x64/sse2,fast return (switch),538
+Parse canada.json,clang x64/sse2,fast return (table),549
+Parse citm_catalog.json,clang x64/sse2,develop,751
+Parse citm_catalog.json,clang x64/sse2,fast return (switch),773
+Parse citm_catalog.json,clang x64/sse2,fast return (table),784
+Parse citm_catalog_nws.json,clang x64/sse2,develop,267
+Parse citm_catalog_nws.json,clang x64/sse2,fast return (switch),273
+Parse citm_catalog_nws.json,clang x64/sse2,fast return (table),278
+Parse integers-32.json,clang x64/sse2,develop,546
+Parse integers-32.json,clang x64/sse2,fast return (switch),541
+Parse integers-32.json,clang x64/sse2,fast return (table),574
+Parse integers-64.json,clang x64/sse2,develop,748
+Parse integers-64.json,clang x64/sse2,fast return (switch),756
+Parse integers-64.json,clang x64/sse2,fast return (table),787
+Parse random.json,clang x64/sse2,develop,463
+Parse random.json,clang x64/sse2,fast return (switch),448
+Parse random.json,clang x64/sse2,fast return (table),473
+Parse small.json,clang x64/sse2,develop,464
+Parse small.json,clang x64/sse2,fast return (switch),470
+Parse small.json,clang x64/sse2,fast return (table),479
+Parse strings.json,clang x64/sse2,develop,7750
+Parse strings.json,clang x64/sse2,fast return (switch),7770
+Parse strings.json,clang x64/sse2,fast return (table),7776
+Parse twitter.json,clang x64/sse2,develop,605
+Parse twitter.json,clang x64/sse2,fast return (switch),594
+Parse twitter.json,clang x64/sse2,fast return (table),615
+
+</textarea>
+
+<script>
+
+var Width = 600;
+
+function autosize (f) {
+  if (f.scrollHeight > f.clientHeight) {
+    f.style.height = f.scrollHeight + "px";
+  }
+}
+
+// Draw a single bar chart representing
+// results for one platform and architecture
+function draw_chart(ctx, title, rows, mbsMax) {
+    var xMax = Math.max(...Object.values(rows));
+
+    // gray separator
+    ctx.beginPath();
+    ctx.strokeStyle = "#A0A0A0";
+    ctx.moveTo(0, 0.5);
+    ctx.lineTo(Width, 0.5);
+    ctx.stroke();
+    ctx.translate(0, 28);
+
+    // title
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#000000";
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillText(title, 0, 0);
+    ctx.translate(0, 26);
+
+    // chart rows
+
+    var sorted = Object.entries(rows).sort(([name1, mbs1], [name2, mbs2]) =>
+	{
+		return parseInt(mbs2) - parseInt(mbs1);
+	});
+
+    var develop = sorted.find(([name, mbs]) => name.includes("develop"))[1];
+
+    sorted.forEach(([name, mbs]) =>
+    {
+        var is_develop = name.includes("develop");
+        var dy = 4;
+        var delta = (((mbs - develop) / develop) * 100);
+        var mbs_text = is_develop ? 
+            (mbs + " MB/s") : (mbs + " MB/s (" + 
+                (delta > 0 ? "+" : "") + 
+                delta.toFixed(1)  + "%)");
+
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#000000";
+        ctx.font = '14px sans-serif';
+        ctx.fillText(name, 0, 0);
+
+        var xMbs = 195;
+    	if (name.includes("switch"))
+            	ctx.fillStyle = "#42f593";
+        else if (name.includes("table"))
+                ctx.fillStyle = "#2ab4eb";
+        else if (name.includes("develop"))
+                ctx.fillStyle = "#e82517";
+        else
+            ctx.fillStyle = "#909090";
+        var w = (Width - 170) * mbs / mbsMax
+        if(w < xMbs - 120)
+            w = xMbs - 120;
+        ctx.fillRect(160, -20+dy, w, 20);
+
+        ctx.textAlign = "left";
+        ctx.font = '13px sans-serif';
+        ctx.fillStyle = "#000000";
+        ctx.fillText(mbs_text, xMbs - 30, -1);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(mbs_text, xMbs - 31, -2);
+
+        ctx.translate(0, 24);
+    });
+
+    // gray separator
+    ctx.translate(0, -4);
+    ctx.beginPath();
+    ctx.strokeStyle = "#A0A0A0";
+    ctx.moveTo(0, 0.5);
+    ctx.lineTo(Width, 0.5);
+    ctx.stroke();
+}
+
+// Draw multiple bar charts, one
+// for each platform and architecture
+function draw_charts(ctx, tab, mbsMax) {
+    // top margin
+    ctx.translate(0, 16);
+
+    // draw each chart
+    Object.entries(tab).forEach(([name, rows]) =>
+    {
+        draw_chart(ctx, name, rows, mbsMax);
+    });
+
+    // bottom margin
+    ctx.translate(0, 16);
+}
+
+function measure_and_draw(canvas, tab) {
+    mbsMax = 0;
+    Object.entries(tab).forEach(([name, rows]) =>
+    {
+        mbsMax = Math.max(mbsMax, ...Object.values(rows));
+    });
+
+    var LeftMargin = 48;
+
+    // Measure the height needed
+    canvas.width = Width;
+    canvas.height = 30000;
+    var ctx = canvas.getContext("2d");
+    ctx.save();
+    draw_charts(ctx, tab);
+    var tx = ctx.getTransform();
+    var height = tx["f"];
+
+    // Resize the canvas to fit
+    canvas.width = LeftMargin + Width + 20;
+    canvas.height = height;
+
+    // Make everything opaque
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(LeftMargin, 0);
+    draw_charts(ctx, tab, mbsMax);
+    ctx.restore();
+}
+
+function update()
+{
+    var tab = new Object();
+    var lines = data.value.split('\n');
+
+    for (var i = 0; i < lines.length; i++)
+    {
+        if(lines[i].length == 0)
+            continue;
+        items = lines[i].split(',');
+        var title = items[0]
+        var target = items[1];
+        var name = items[2];
+        var mbs = items[3];
+        if(! (title in tab))
+            tab[title] = new Object();
+        if(! (target in tab[title]))
+            tab[title][target] = new Object();
+        var set = tab[title][target];
+        if(! (name in set))
+            set[name] = new Object();           
+        set[name] = mbs;
+	}
+
+    benchmarks.innerHTML = "";
+    Object.entries(tab).forEach(([title, charts]) =>
+    {
+        benchmarks.innerHTML +=
+            "<h2>" + title + "</h2>" +
+            "<canvas id=\"" + title + "\" width=\"800\" height=\"600\">";
+    });
+    Object.entries(tab).forEach(([title, charts]) =>
+    {
+        measure_and_draw(document.getElementById(title), charts)
+    });
+}
+
+data.oninput = function()
+{
+    update();
+}
+
+update();
+
+</script>
+</body>
+</html>
